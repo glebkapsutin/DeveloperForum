@@ -9,7 +9,13 @@
 
         public DateTime? CreatedDate { get; set; }
 
+        public ICollection<Comment>? Comments { get; set; } = new List<Comment>();
+
+     
+
         public User? User { get; set; }
+
+        public int UserId { get; set; }
 
 
     }

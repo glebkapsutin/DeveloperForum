@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace DevelopForum.Migrations
 {
-    [DbContext(typeof(DevelopForumContext))]
+    [DbContext(typeof(DevelopForumDbContext))]
     partial class DevelopForumContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

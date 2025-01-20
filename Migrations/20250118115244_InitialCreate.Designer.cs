@@ -11,7 +11,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace DevelopForum.Migrations
 {
-    [DbContext(typeof(DevelopForumContext))]
+    [DbContext(typeof(DevelopForumDbContext))]
     [Migration("20250118115244_InitialCreate")]
     partial class InitialCreate
     {

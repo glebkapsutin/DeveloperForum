@@ -8,12 +8,15 @@
 
         public string Email { get; set; }
 
-        public List<Post>? Posts { get; set; }
+        public string Password { get; set; }
 
+        public DateTime RegisteredAt { get; set; }
 
+        public ICollection<Post>? Posts { get; set; } = new List<Post>();
 
+       
+        public Role Role { get; set; }
 
-            
-
+        public int RoleId  { get; set; }
     }
 }
