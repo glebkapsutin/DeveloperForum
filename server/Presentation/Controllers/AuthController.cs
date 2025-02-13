@@ -7,6 +7,13 @@ namespace server.Presentation.Controllers
     [Route("api/[controller]")]
     public class AuthController : ControllerBase
     {
+        public async Task<IActionResult> Login()
+        {
         
+        }
+        public async Task<IActionResult> Register()
+        {
+
+        }
     }
 }

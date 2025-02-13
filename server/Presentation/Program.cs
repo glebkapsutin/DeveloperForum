@@ -4,6 +4,10 @@ using server.Infastructure.Data;
 using server.Infastructure.Repositories;
 using server.Presentation.Middleware;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using server.Core.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 var isDocker = Environment.GetEnvironmentVariable("DOTNET_RUNNING_IN_CONTAINER") == "true";
@@ -29,6 +33,29 @@ builder.Services.AddCors(options =>
 });
 
 
+builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("JwtSettings"));
+var jwtSettings = builder.Configuration.GetSection("JwtSettings").Get<JwtSettings>();
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Secret)),
+            ValidateIssuer = true,
+            ValidIssuer = jwtSettings.Issuer,
+            ValidateAudience = true,
+            ValidAudience = jwtSettings.Audience,
+            ValidateLifetime = true,
+            ClockSkew = TimeSpan.Zero
+        };
+    });
+
+builder.Services.AddAuthorization();
+
+
+
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -43,7 +70,7 @@ builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 
 var app = builder.Build();
-//комментить это на windows visual studio
+
 DataBaseInitializer.ApplyMigrations(app.Services); 
 if (app.Environment.IsDevelopment())
 {
@@ -61,6 +88,7 @@ if (app.Environment.IsDevelopment())
 
 
 app.UseMiddleware<ExceptionHandlingMiddleware>(); 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers(); 
