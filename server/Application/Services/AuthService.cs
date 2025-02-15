@@ -93,7 +93,7 @@ namespace server.Application.Services
 
         private string GenerateJwtToken(User user)
         {
-            var jwtSettings = _configuration.GetSection("Jwt").Get<JwtSettings>();
+            var jwtSettings = _configuration.GetSection("JwtSettings").Get<JwtSettings>();
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Secret));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
