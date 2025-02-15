@@ -68,7 +68,7 @@ builder.Services.AddScoped<ICommentService, CommentService>();
 builder.Services.AddScoped<ICommentRepository, CommentRepository>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
-
+builder.Services.AddScoped<IAuthService, AuthService>();
 var app = builder.Build();
 
 DataBaseInitializer.ApplyMigrations(app.Services); 
