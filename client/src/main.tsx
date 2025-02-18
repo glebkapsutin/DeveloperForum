@@ -1,29 +1,19 @@
 // src/main.tsx
+// src/main.tsx
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { Provider } from "react-redux";
+
 import { store } from "./app/store";
+import AuthProvider from "./app/services/AuthProvider";
 import App from "./App";
-import { ThemeProvider, CssBaseline } from "@mui/material";
-import theme from "./theme";
-import "./index.css";
 
-
-
-const container = document.getElementById("root");
-
-if (container) {
-    const root = ReactDOM.createRoot(container);
-    root.render(
-        <React.StrictMode>
-            <Provider store={store}>
-                <ThemeProvider theme={theme}>
-                    <CssBaseline /> {/* —брос базовых стилей */}
-                    <App />
-                </ThemeProvider>
-            </Provider>
-        </React.StrictMode>
-    );
-} else {
-    throw new Error("Root element not found.");
-}
+ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
+  <React.StrictMode>
+    <Provider store={store}>
+      <AuthProvider>
+        <App />
+      </AuthProvider>
+    </Provider>
+  </React.StrictMode>
+);

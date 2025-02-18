@@ -1,27 +1,16 @@
-import type { Action, ThunkAction } from "@reduxjs/toolkit"
-import { combineSlices, configureStore } from "@reduxjs/toolkit"
+// src/app/store.ts
+import { configureStore } from "@reduxjs/toolkit";
+import authReducer from "./services/authSlice";
+import { api } from "./services/api";
 
+export const store = configureStore({
+  reducer: {
+    auth: authReducer,
+    [api.reducerPath]: api.reducer,
+  },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(api.middleware),
+});
 
-
-
-
-
-
-
-  export const store = configureStore({
-      reducer: {},
-    
-   
-  })
- 
-
-export type AppStore = typeof store
-export type RootState = ReturnType<typeof store.getState>
-
-export type AppDispatch = AppStore["dispatch"]
-export type AppThunk<ThunkReturnType = void> = ThunkAction<
-  ThunkReturnType,
-  RootState,
-  unknown,
-  Action
->
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
