@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using server.Infastructure.Data;
@@ -11,9 +12,11 @@ using server.Infastructure.Data;
 namespace DevelopForum.Migrations
 {
     [DbContext(typeof(DevelopForumDbContext))]
-    partial class DevelopForumDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250219135451_AddFollowsAndLiker")]
+    partial class AddFollowsAndLiker
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
