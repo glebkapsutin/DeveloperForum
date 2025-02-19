@@ -17,27 +17,6 @@ namespace server.Infastructure.Data
         public DbSet<Comment> Comments { get; set; }
 
         public DbSet<Role> Roles { get; set; }
-
-        public DbSet<Likes> Likes { get; set; }
-
-        public DbSet<Follows> Follows { get; set; }
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
-
-            // Конфигурация связи подписок и подписчиков
-            modelBuilder.Entity<Follows>()
-                .HasOne(f => f.Follower)
-                .WithMany(u => u.Followings)  // Пользователь может иметь много подписок
-                .HasForeignKey(f => f.FollowerId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            modelBuilder.Entity<Follows>()
-                .HasOne(f => f.Following)
-                .WithMany(u => u.Followers)   // Пользователь может иметь много подписчиков
-                .HasForeignKey(f => f.FollowingId)
-                .OnDelete(DeleteBehavior.Restrict);
-        }
     }
 
    

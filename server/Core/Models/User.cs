@@ -18,10 +18,7 @@
         public Role Role { get; set; }
 
         public int RoleId  { get; set; }
+
        
-        public ICollection<Follows> Followers { get; set; } = new List<Follows>();
-        public ICollection<Follows> Followings { get; set; } = new List<Follows>();
-
-
     }
 }

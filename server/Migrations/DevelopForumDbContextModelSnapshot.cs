@@ -72,52 +72,6 @@ namespace DevelopForum.Migrations
                     b.ToTable("Comments");
                 });
 
-            modelBuilder.Entity("server.Core.Models.Follows", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("FollowerId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("FollowingId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("FollowerId");
-
-                    b.HasIndex("FollowingId");
-
-                    b.ToTable("Follows");
-                });
-
-            modelBuilder.Entity("server.Core.Models.Likes", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("PostId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PostId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Likes");
-                });
-
             modelBuilder.Entity("server.Core.Models.Post", b =>
                 {
                     b.Property<int>("Id")
@@ -216,44 +170,6 @@ namespace DevelopForum.Migrations
                     b.Navigation("Post");
                 });
 
-            modelBuilder.Entity("server.Core.Models.Follows", b =>
-                {
-                    b.HasOne("server.Core.Models.User", "Follower")
-                        .WithMany("Followings")
-                        .HasForeignKey("FollowerId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("server.Core.Models.User", "Following")
-                        .WithMany("Followers")
-                        .HasForeignKey("FollowingId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Follower");
-
-                    b.Navigation("Following");
-                });
-
-            modelBuilder.Entity("server.Core.Models.Likes", b =>
-                {
-                    b.HasOne("server.Core.Models.Post", "Post")
-                        .WithMany()
-                        .HasForeignKey("PostId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("server.Core.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Post");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("server.Core.Models.Post", b =>
                 {
                     b.HasOne("server.Core.Models.Category", null)
@@ -292,10 +208,6 @@ namespace DevelopForum.Migrations
 
             modelBuilder.Entity("server.Core.Models.User", b =>
                 {
-                    b.Navigation("Followers");
-
-                    b.Navigation("Followings");
-
                     b.Navigation("Posts");
                 });
 #pragma warning restore 612, 618

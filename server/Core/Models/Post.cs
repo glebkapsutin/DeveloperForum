@@ -11,7 +11,7 @@
 
         public ICollection<Comment>? Comments { get; set; } = new List<Comment>();
 
-        public ICollection<Likes> Likes = new List<Likes>();
+     
 
         public User? User { get; set; }
 
