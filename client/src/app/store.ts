@@ -1,16 +1,25 @@
-// src/app/store.ts
-import { configureStore } from "@reduxjs/toolkit";
-import authReducer from "./services/authSlice";
-import { api } from "./services/api";
+/* eslint-disable @typescript-eslint/consistent-type-imports */
+import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit"
+import { api } from "./services/api"
+import auth from "../features/user/userSlice"
+import { listenerMiddleware } from "../middleware/auth"
 
 export const store = configureStore({
-  reducer: {
-    auth: authReducer,
-    [api.reducerPath]: api.reducer,
-  },
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(api.middleware),
-});
+    reducer: {
+        [api.reducerPath]: api.reducer,
+        auth,
+    },
+    middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware()
+            .concat(api.middleware)
+            .prepend(listenerMiddleware.middleware),
+})
 
-export type RootState = ReturnType<typeof store.getState>;
-export type AppDispatch = typeof store.dispatch;
+export type AppDispatch = typeof store.dispatch
+export type RootState = ReturnType<typeof store.getState>
+export type AppThunk<ReturnType = void> = ThunkAction<
+    ReturnType,
+    RootState,
+    unknown,
+    Action<string>
+>

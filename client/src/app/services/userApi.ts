@@ -1,32 +1,77 @@
+/* eslint-disable @typescript-eslint/consistent-type-imports */
 // src/app/services/userApi.ts
 import { api } from "./api";
-import { User, LoginRequest, RegisterRequest } from "../types";
+import {
+    LoginRequest,
+    RegistrationRequest,
+    AuthResult,
+    UserDto
+} from "../types";
 
 export const userApi = api.injectEndpoints({
-  endpoints: (builder) => ({
-    login: builder.mutation<{ token: string }, LoginRequest>({
-      query: (userData) => ({
-        url: "/Auth/login",
-        method: "POST",
-        body: userData,
-      }),
+    endpoints: (builder) => ({
+        // 1. POST /api/Auth/login
+        login: builder.mutation<AuthResult, LoginRequest>({
+            query: (loginData) => ({
+                url: "/Auth/login",
+                method: "POST",
+                body: loginData,
+            }),
+        }),
+        // 2. POST /api/Auth/registerUser
+        registerUser: builder.mutation<AuthResult, RegistrationRequest>({
+            query: (registerData) => ({
+                url: "/Auth/registerUser",
+                method: "POST",
+                body: registerData,
+            }),
+        }),
+        // 3. GET /api/User (получение списка пользователей)
+        getUsers: builder.query<UserDto[], void>({
+            query: () => ({
+                url: "/User",
+                method: "GET",
+            }),
+        }),
+        // 4. POST /api/User (создание нового пользовател€)
+        createUser: builder.mutation<UserDto, Partial<UserDto>>({
+            query: (newUser) => ({
+                url: "/User",
+                method: "POST",
+                body: newUser,
+            }),
+        }),
+        // 5. GET /api/User/{id} (получение пользовател€ по ID)
+        getUserById: builder.query<UserDto, number>({
+            query: (id) => ({
+                url: `/User/${id}`,
+                method: "GET",
+            }),
+        }),
+        // 6. DELETE /api/User/{id} (удаление пользовател€ по ID)
+        deleteUser: builder.mutation<{ success: boolean; id: number }, number>({
+            query: (id) => ({
+                url: `/User/${id}`,
+                method: "DELETE",
+            }),
+        }),
+        // 7. PUT /api/User/{id} (обновление данных пользовател€)
+        updateUser: builder.mutation<UserDto, { id: number; userData: Partial<UserDto> }>({
+            query: ({ id, userData }) => ({
+                url: `/User/${id}`,
+                method: "PUT",
+                body: userData,
+            }),
+        }),
     }),
-    register: builder.mutation<{ token: string }, RegisterRequest>({
-      query: (userData) => ({
-        url: "/Auth/register",
-        method: "POST",
-        body: userData,
-      }),
-    }),
-    currentUser: builder.query<User, void>({
-      // ѕредполагаетс€, что на бэкенде существует маршрут дл€ получени€ данных текущего пользовател€
-      query: () => ({
-        url: "/User",
-        method: "GET",
-      }),
-    }),
-  }),
 });
 
-export const { useLoginMutation, useRegisterMutation, useCurrentUserQuery } =
-  userApi;
+export const {
+    useLoginMutation,
+    useRegisterUserMutation,
+    useGetUsersQuery,
+    useCreateUserMutation,
+    useGetUserByIdQuery,
+    useDeleteUserMutation,
+    useUpdateUserMutation,
+} = userApi;
