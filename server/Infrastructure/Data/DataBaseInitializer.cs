@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
 
-namespace server.Infastructure.Data
+namespace server.Infrastructure.Data
 {
     public static class DataBaseInitializer
     {

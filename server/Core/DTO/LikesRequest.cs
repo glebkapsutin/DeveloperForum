@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace server.Infastructure.Repositories
+namespace server.Core.DTO
 {
-    public class LikesRepository
+    public class LikesRequest
     {
         
     }

@@ -1,10 +1,10 @@
 ﻿using server.Application.Interfaces;
 using server.Core.Models;
-using server.Infastructure.Data;
+using server.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
 
-namespace server.Infastructure.Repositories
+namespace server.Infrastructure.Repositories
 {
     public class CategoryRepository : ICategoryRepository
     {

@@ -1,7 +1,7 @@
 using server.Core.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace server.Infastructure.Data
+namespace server.Infrastructure.Data
 {
     public class DevelopForumDbContext : DbContext
     {
@@ -25,16 +25,16 @@ namespace server.Infastructure.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            // Конфигурация связи подписок и подписчиков
+            // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
             modelBuilder.Entity<Follows>()
                 .HasOne(f => f.Follower)
-                .WithMany(u => u.Followings)  // Пользователь может иметь много подписок
+                .WithMany(u => u.Followings)  // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
                 .HasForeignKey(f => f.FollowerId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Follows>()
                 .HasOne(f => f.Following)
-                .WithMany(u => u.Followers)   // Пользователь может иметь много подписчиков
+                .WithMany(u => u.Followers)   // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
                 .HasForeignKey(f => f.FollowingId)
                 .OnDelete(DeleteBehavior.Restrict);
         }

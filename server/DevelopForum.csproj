@@ -9,12 +9,7 @@
 		<DockerfileContext>.</DockerfileContext>
 	</PropertyGroup>
 
-	<ItemGroup>
-	  <Compile Remove="Infrastructure\**" />
-	  <Content Remove="Infrastructure\**" />
-	  <EmbeddedResource Remove="Infrastructure\**" />
-	  <None Remove="Infrastructure\**" />
-	</ItemGroup>
+	
 
 	<ItemGroup>
 		<PackageReference Include="jose-jwt" Version="5.1.1" />

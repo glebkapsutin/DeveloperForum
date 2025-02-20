@@ -7,6 +7,9 @@ namespace server.Application.Interfaces
 {
     public interface IFollowsRepository
     {
-        
+        public Task AddFollowAsync(int followerId, int followingId);
+        public Task RemoveFollowAsync(int followerId, int followingId);
+       
     }
+
 }

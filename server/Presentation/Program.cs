@@ -1,13 +1,14 @@
 using server.Application.Interfaces;
 using server.Application.Services;
-using server.Infastructure.Data;
-using server.Infastructure.Repositories;
 using server.Presentation.Middleware;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using server.Core.Models;
+using server.Infrastructure.Data;
+using server.Infrastructure.Repositories;
+
 
 var builder = WebApplication.CreateBuilder(args);
 var isDocker = Environment.GetEnvironmentVariable("DOTNET_RUNNING_IN_CONTAINER") == "true";
@@ -69,6 +70,10 @@ builder.Services.AddScoped<ICommentRepository, CommentRepository>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IFollowsService, FollowsService>();
+builder.Services.AddScoped<IFollowsRepository, FollowsRepository>();
+builder.Services.AddScoped<ILikesService, LikesService>();
+builder.Services.AddScoped<ILikesRepository, LikesRepository>();
 var app = builder.Build();
 
 DataBaseInitializer.ApplyMigrations(app.Services); 

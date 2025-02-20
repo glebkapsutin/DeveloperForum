@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using server.Application.Interfaces;
 using server.Core.Models;
-using server.Infastructure.Data;
-namespace server.Infastructure.Repositories
+using server.Infrastructure.Data;
+namespace server.Infrastructure.Repositories
 {
     public class UserRepository : IUserRepository
     {
