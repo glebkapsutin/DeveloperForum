@@ -19,7 +19,7 @@ namespace server.Presentation.Controllers
             _likesService = likesService;
         }
 
-        // POST: api/likes/like
+        
         [HttpPost("like")]
         public async Task<IActionResult> LikePost([FromBody] Likes request)
         {
@@ -35,7 +35,7 @@ namespace server.Presentation.Controllers
             }
         }
 
-        // DELETE: api/likes/unlike
+       
         [HttpDelete("unlike")]
         public async Task<IActionResult> UnlikePost([FromBody] Likes request)
         {

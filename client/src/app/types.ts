@@ -12,6 +12,20 @@ export type Role = {
     id: number;
     typeOfRole: RoleType;
 };
+export type Likes = {
+    id: number;
+    user: User;
+    userId: number;
+    post: Post;
+    postId: number;
+}
+export type Follows = {
+    id: number;
+    follower:User;
+    following: User;
+    followerId: number;
+    followingId: number;
+}
 
 /** Модель пользователя */
 export type User = {
@@ -23,6 +37,9 @@ export type User = {
     posts?: Post[];        // список постов, может быть пустым
     role: Role;
     roleId: number;
+    followers: Follows[];
+    followings: Follows[];
+
 };
 
 /** Модель поста */
@@ -35,6 +52,7 @@ export type Post = {
     comments?: Comment[];  // список комментариев
     user?: User;           // автор поста
     userId: number;
+    likes: Likes[];
 };
 
 /** Модель комментария */
