@@ -4,7 +4,7 @@ import { api } from "./api";
 
 export const commentApi = api.injectEndpoints({
     endpoints: (builder) => ({
-        // Создание комментария
+        
         createComment: builder.mutation<Comment, Omit<Comment, "id" | "createdDate">>({
             query: (commentData) => ({
                 url: "/Comment",
@@ -13,7 +13,7 @@ export const commentApi = api.injectEndpoints({
             }),
         }),
 
-        // Получение всех комментариев
+        
         getAllComments: builder.query<Comment[], void>({
             query: () => ({
                 url: "/Comment",
@@ -21,7 +21,7 @@ export const commentApi = api.injectEndpoints({
             }),
         }),
 
-        // Получение комментария по ID
+       
         getCommentById: builder.query<Comment, number>({
             query: (commentId) => ({
                 url: `/Comment/${commentId}`,
@@ -29,7 +29,7 @@ export const commentApi = api.injectEndpoints({
             }),
         }),
 
-        // Удаление комментария
+        
         deleteComment: builder.mutation<void, number>({
             query: (commentId) => ({
                 url: `/Comment/${commentId}`,
@@ -37,7 +37,6 @@ export const commentApi = api.injectEndpoints({
             }),
         }),
 
-        // Обновление комментария (обновляем только описание комментария)
         updateComment: builder.mutation<Comment, { id: number; data: Pick<Comment, "description"> }>({
             query: ({ id, data }) => ({
                 url: `/Comment/${id}`,

@@ -1,13 +1,12 @@
-// src/app/services/styles.ts
 
 /**
- * Типы и DTO, соответствующие моделям бэкенда.
+ * пїЅпїЅпїЅпїЅ пїЅ DTO, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ.
  */
 
-/** Возможные типы ролей пользователя (на основе server.Core.Enums) */
+/** пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ server.Core.Enums) */
 export type RoleType = "Admin" | "User";
 
-/** Модель роли */
+/** пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ */
 export type Role = {
     id: number;
     typeOfRole: RoleType;
@@ -27,14 +26,14 @@ export type Follows = {
     followingId: number;
 }
 
-/** Модель пользователя */
+/** пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ */
 export type User = {
     id: number;
-    userName: string;      // соответствует UserName на бэкенде
+    userName: string;      // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ UserName пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     email: string;
-    password: string;      // пароль обычно не отправляют на клиент, но он здесь для полноты модели
-    registeredAt: string;  // дата в формате ISO
-    posts?: Post[];        // список постов, может быть пустым
+    password: string;      // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+    registeredAt: string;  // пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ ISO
+    posts?: Post[];        // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
     role: Role;
     roleId: number;
     followers: Follows[];
@@ -42,38 +41,38 @@ export type User = {
 
 };
 
-/** Модель поста */
+/** пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ */
 export type Post = {
     id: number;
     title: string;
     description: string;
     author: string;
-    createdDate?: string;  // дата может быть отсутствующей (null)
-    comments?: Comment[];  // список комментариев
-    user?: User;           // автор поста
+    createdDate?: string;  // пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (null)
+    comments?: Comment[];  // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+    user?: User;           // пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
     userId: number;
     likes: Likes[];
 };
 
-/** Модель комментария */
+/** пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ */
 export type Comment = {
     id: number;
     post: Post;
     postId: number;
     description: string;
     author: string;
-    createdDate: string;  // дата в формате ISO
+    createdDate: string;  // пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ ISO
 };
 
-/** Модель категории */
+/** пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ */
 export type Category = {
     id: number;
     title: string;
     description: string;
-    posts?: Post[];        // список постов, связанных с категорией
+    posts?: Post[];        // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 };
 
-/** Настройки JWT */
+/** пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ JWT */
 export type JwtSettings = {
     secret: string;
     issuer: string;
@@ -83,20 +82,20 @@ export type JwtSettings = {
 
 /* DTO */
 
-/** Запрос на регистрацию */
+/** пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ */
 export type RegistrationRequest = {
-    username: string;  // соответствует Username на бэкенде
+    username: string;  // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ Username пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     email: string;
     password: string;
 };
 
-/** Запрос на логин */
+/** пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ */
 export type LoginRequest = {
     email: string;
     password: string;
 };
 
-/** DTO пользователя (без пароля) */
+/** DTO пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ) */
 export type UserDto = {
     id: number;
     userName: string;
@@ -105,10 +104,10 @@ export type UserDto = {
     role: Role;
 };
 
-/** Результат аутентификации */
+/** пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ */
 export type AuthResult = {
     success: boolean;
     message: string;
-    token: string;    // JWT-токен, если операция успешна
+    token: string;    // JWT-пїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     user: UserDto;
 };
