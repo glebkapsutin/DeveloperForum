@@ -7,31 +7,55 @@ type Props = {
     className?: string;
     type?: "button" | "submit" | "reset";
     fullWidth?: boolean;
-    color?: "primary" | "secondary" | "success" | "warning" | "error";
-    variant?: "text" | "contained" | "outlined";
-    onClick?: () => void;
+    color?:
+    | "default"
+    | "primary"
+    | "secondary"
+    | "success"
+    | "warning"
+    | "danger"
+    | undefined;
 };
 
 export const Button: React.FC<Props> = ({
     children,
     icon,
     className,
-    type = "button",
-    fullWidth = false,
-    color = "primary",
-    variant = "contained",
-    onClick,
+    type,
+    fullWidth,
+    color,
 }) => {
+    
+    let muiColor:
+        | "inherit"
+        | "primary"
+        | "secondary"
+        | "success"
+        | "error"
+        | "info"
+        | "warning"
+        | undefined;
+   
+
     return (
         <MuiButton
             startIcon={icon}
-            size="large"
-            color={color}
-            variant={variant}
+            size="large" 
+            color={muiColor}
+            variant="text" 
             className={className}
             type={type}
             fullWidth={fullWidth}
-            onClick={onClick}
+            sx={{
+                fontSize: "1.5rem",
+                backgroundColor: "transparent",
+                border: "none", 
+                textTransform: "none",
+                transition: "background-color 0.3s",
+                "&:hover": {
+                    backgroundColor: muiColor === "inherit" ? "action.hover" : undefined,
+                },
+            }}
         >
             {children}
         </MuiButton>
