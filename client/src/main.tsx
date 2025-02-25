@@ -15,7 +15,7 @@ import { UserProfile } from "./pages/user-profile/index";
 import { Following } from "./pages/following/index";
 import { RouterProvider } from "../node_modules/react-router-dom/dist/index";
 import { Auth } from "./pages/auth/index";
-
+import "uno.css";
 
 const router = createBrowserRouter([
   {
