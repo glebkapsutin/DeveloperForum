@@ -16,11 +16,37 @@ export const Header = () => {
         borderBottom: `1px solid ${theme.palette.divider}`,
       }}
     >
-      <Toolbar sx={{ display: "flex", justifyContent: "space-between", px: 2 }}>
-              <Typography variant="h6" sx={{ fontWeight: "bold", px: 80}}>
+      <Toolbar
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          px: 2,
+          flexDirection: { xs: "column", sm: "row" }, // Строка на экранах больше, колонка на мобильных
+        }}
+      >
+        {/* Название */}
+        <Typography
+          variant="h6"
+          sx={{
+            fontWeight: "bold",
+            px: { xs: "5vw", sm: "10vw" }, // Отступы в процентах от ширины экрана (для гибкости)
+            textAlign: { xs: "center", sm: "left" }, // Центрирование на мобильных
+            width: "auto", // Для гибкости
+          }}
+        >
           Developer Forum
         </Typography>
-              <Box sx={{px: 60}}>
+
+        {/* Переключатель темы */}
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: { xs: "center", sm: "flex-start" },
+            px: { xs: "5vw", sm: "10vw" }, // Отступы в процентах от ширины экрана
+            width: "auto",
+            mt: { xs: 2, sm: 0 }, // Отступ сверху для мобильных устройств
+          }}
+        >
           <ThemeToggle />
         </Box>
       </Toolbar>

@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
-import { useTheme } from "@mui/material/styles"; // Для использования темы
+import { useTheme } from "@mui/material/styles"; // пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
 
 type Props = {
     children: React.ReactNode;
@@ -10,25 +10,25 @@ type Props = {
 };
 
 export const NavButton: React.FC<Props> = ({ children, icon, href }) => {
-    const theme = useTheme(); // Получаем текущую тему (светлая или темная)
+    const theme = useTheme(); // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ (пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ)
 
     return (
         <Button
-            component={Link} // Делаем кнопку ссылкой
+            component={Link} // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
             to={href}
-            startIcon={icon} // Иконка слева
+            startIcon={icon} // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
             fullWidth
-            variant="text" // Кнопка без контура и фона
+            variant="text" // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅ
             sx={{
-                justifyContent: "flex-start", // Иконка и текст слева
-                textTransform: "none", // Отключаем капс
-                fontSize: "1.5rem", // Размер текста
+                justifyContent: "flex-start", // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
+                textTransform: "none", // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
+                fontSize: "1.5rem", // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
                 padding: "10px 16px",
                 borderRadius: "10px",
-                backgroundColor: "transparent", // Прозрачный фон
-                color: theme.palette.mode === "dark" ? "#fff" : "#000", // Цвет текста зависит от темы
+                backgroundColor: "transparent", // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ
+                color: theme.palette.mode === "dark" ? "#fff" : "#000", // пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅ
                 "&:hover": {
-                    backgroundColor: theme.palette.mode === "dark" ? "rgba(255, 255, 255, 0.2)" : "rgba(0, 0, 0, 0.1)", // Светлее при ховере
+                    backgroundColor: theme.palette.mode === "dark" ? "rgba(255, 255, 255, 0.2)" : "rgba(0, 0, 0, 0.1)", // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
                 },
             }}
         >
