@@ -1,5 +1,4 @@
-// src/main.tsx
-// src/main.tsx
+
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { Provider } from "react-redux";
@@ -7,7 +6,7 @@ import { Provider } from "react-redux";
 import { store } from "./app/store";
 import App from "./App";
 import {createBrowserRouter} from 'react-router-dom'
-import { ThemeProvider } from "./components/theme-provider";
+import { CustomThemeProvider } from "./components/theme-provider";
 
 
 const router = createBrowserRouter([
@@ -23,9 +22,9 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <Provider store={store}>
-      <ThemeProvider>
+      <CustomThemeProvider>
         <App />
-      </ThemeProvider>
+      </CustomThemeProvider>
     </Provider>
   </React.StrictMode>
 );

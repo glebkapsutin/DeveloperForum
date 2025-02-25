@@ -1,6 +1,7 @@
-// src/App.tsx
+
 import React from "react";
-import { Button, Container, Typography, Box } from "@mui/material";
+import { Container, Typography, Box } from "@mui/material";
+
 
 const App = () => {
     return (
@@ -8,11 +9,7 @@ const App = () => {
             <Typography variant="h3" gutterBottom>
                 Hello, Material UI!
             </Typography>
-            <Box sx={{ mt: 2 }}>
-                <Button variant="contained" color="primary">
-                    input me
-                </Button>
-            </Box>
+            
         </Container>
     );
 };
