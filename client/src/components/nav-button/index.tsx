@@ -18,7 +18,7 @@ export const NavButton: React.FC<Props> = ({ children, icon, href }) => {
             to={href}
             startIcon={icon} // Иконка слева
             fullWidth
-            variant="outlined" // Контурная кнопка
+            variant="text" // Кнопка без контура и фона
             sx={{
                 justifyContent: "flex-start", // Иконка и текст слева
                 textTransform: "none", // Отключаем капс
@@ -26,11 +26,9 @@ export const NavButton: React.FC<Props> = ({ children, icon, href }) => {
                 padding: "10px 16px",
                 borderRadius: "10px",
                 backgroundColor: "transparent", // Прозрачный фон
-                border: `1px solid ${theme.palette.mode === "dark" ? "#fff" : "#000"}`, // Контур зависит от темы
                 color: theme.palette.mode === "dark" ? "#fff" : "#000", // Цвет текста зависит от темы
                 "&:hover": {
-                    backgroundColor: theme.palette.mode === "dark" ? "rgba(255, 255, 255, 0.2)" : "rgba(0, 0, 0, 0.1)", // Изменение фона при ховере
-                    borderColor: theme.palette.mode === "dark" ? "#fff" : "#000", // Изменение цвета контура при ховере
+                    backgroundColor: theme.palette.mode === "dark" ? "rgba(255, 255, 255, 0.2)" : "rgba(0, 0, 0, 0.1)", // Светлее при ховере
                 },
             }}
         >

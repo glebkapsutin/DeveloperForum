@@ -17,10 +17,10 @@ export const Header = () => {
       }}
     >
       <Toolbar sx={{ display: "flex", justifyContent: "space-between", px: 2 }}>
-        <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+              <Typography variant="h6" sx={{ fontWeight: "bold", px: 80}}>
           Developer Forum
         </Typography>
-        <Box>
+              <Box sx={{px: 60}}>
           <ThemeToggle />
         </Box>
       </Toolbar>
