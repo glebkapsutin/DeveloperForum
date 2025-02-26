@@ -13,7 +13,7 @@ export const Header = () => {
       sx={{
         bgcolor: theme.palette.background.default,
         color: theme.palette.text.primary,
-        borderBottom: `1px solid ${theme.palette.divider}`,
+        borderBottom: ` ${theme.palette.divider}`,
       }}
     >
       <Toolbar
@@ -29,7 +29,7 @@ export const Header = () => {
           variant="h6"
           sx={{
             fontWeight: "bold",
-            px: { xs: "5vw", sm: "10vw" }, // Отступы в процентах от ширины экрана (для гибкости)
+            px: { xs: "5vw", sm: "24vw" }, // Отступы в процентах от ширины экрана (для гибкости)
             textAlign: { xs: "center", sm: "left" }, // Центрирование на мобильных
             width: "auto", // Для гибкости
           }}
@@ -42,7 +42,7 @@ export const Header = () => {
           sx={{
             display: "flex",
             justifyContent: { xs: "center", sm: "flex-start" },
-            px: { xs: "5vw", sm: "10vw" }, // Отступы в процентах от ширины экрана
+            px: { xs: "5vw", sm: "12vw" }, // Отступы в процентах от ширины экрана
             width: "auto",
             mt: { xs: 2, sm: 0 }, // Отступ сверху для мобильных устройств
           }}
