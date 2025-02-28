@@ -1,10 +1,10 @@
-// Импортируем необходимые библиотеки и компоненты
+
 import { TextField, Button, Link } from "@mui/material"
 import { Input } from "../../components/input"
 import { useForm } from "react-hook-form"
 
 import {
-    useGetUsersQuery, // узнать больше про Get!
+    useGetUsersQuery, 
     useLoginMutation,
 } from "../../app/services/userApi"
 import { useNavigate } from "react-router-dom"
@@ -55,38 +55,38 @@ export const Login = ({ setSelected }: Props) => {
                 name="email"
                 label="Email"
                 type="email"
-                required="Обязательное поле"
+                required="РћР±СЏР·Р°С‚РµР»СЊРЅРѕРµ РїРѕР»Рµ"
                 errorMessage={errors.email?.message}
 
             />
             <Input
-                control={control} // Подключаем к react-hook-form
-                name="password" // Название поля
-                label="Пароль" // Текст, который будет показываться рядом с полем
-                type="password" // Тип поля (пароль, значит, текст будет скрыт)
-                required="Обязательное поле" // Сообщение для пустого поля
-                errorMessage={errors.password?.message} // Ошибка для пароля, если есть
+                control={control} 
+                name="password" 
+                label="пїЅпїЅпїЅпїЅпїЅпїЅ" 
+                type="password" 
+                required="РћР±СЏР·Р°С‚РµР»СЊРЅРѕРµ РїРѕР»Рµ" 
+                errorMessage={errors.password?.message} 
             />
             <ErrorMessage error={error} />
             <p className="text-center text-sm">
-                Нет аккаунта?{" "}
+                РќРµС‚ Р°РєРєР°СѓС‚РЅР°?{" "}
                 <Link
                     size="sm"
                     className="cursor-pointer"
-                    onClick={() => setSelected("sign-up")} // При клике переключаем на форму регистрации
+                    onClick={() => setSelected("sign-up")} 
                 >
-                    Зарегистрируйтесь
+                    Р—Р°СЂРµРіРёСЃС‚СЂРёСЂСѓР№С‚РµСЃСЊ
                 </Link>
             </p>
             <div className="flex gap-2 justify-end">
-                {/* Кнопка "Войти", которая отправит данные формы */}
+              
                 <Button
-                    fullWidth // Кнопка будет занимать всю ширину
-                    color="primary" // Кнопка будет синей
-                    type="submit" // Тип кнопки - отправка формы
-                    isLoading={isLoading} // Если запрос в процессе, кнопка станет неактивной и будет показывать "Загрузка..."
+                    fullWidth 
+                    color="primary" 
+                    type="submit" 
+                    isLoading={isLoading} 
                 >
-                    {isLoading ? "Загрузка..." : "Войти"} {/* Текст на кнопке */}
+                    Р’РѕР№С‚Рё
                 </Button>
             </div>
         </form>

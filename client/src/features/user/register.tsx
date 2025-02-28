@@ -50,8 +50,8 @@ export const Register = ({ setSelected }: Props) => {
         <form className="flex flex-col gap-4 w-80 mx-auto p-4 bg-white shadow-md rounded-lg" onSubmit={handleSubmit(onSubmit)}>
             <Input
                 control={control}
-                required="Обязательное поле"
-                label="Имя"
+                required="РћР±СЏР·Р°С‚РµР»СЊРЅРѕРµ РїРѕР»Рµ"
+                label="РРјСЏ"
                 name="name"
             />
             <Input
@@ -59,30 +59,30 @@ export const Register = ({ setSelected }: Props) => {
                 name="email"
                 label="Email"
                 type="email"
-                required="Обязательное поле"
+                required="РћР±СЏР·Р°С‚РµР»СЊРЅРѕРµ РїРѕР»Рµ"
             />
             <Input
                 control={control}
                 name="password"
-                label="Пароль"
+                label="РџР°СЂРѕР»СЊ"
                 type="password"
-                required="Обязательное поле"
+                required="РћР±СЏР·Р°С‚РµР»СЊРЅРѕРµ РїРѕР»Рµ"
             />
             <ErrorMessage error={error} />
 
             <p className="text-center text-sm">
-                Уже есть аккаунт?{" "}
+                РЈР¶Рµ РµСЃС‚СЊ Р°РєРєР°СѓРЅС‚?{" "}
                 <Link
                     size="sm"
                     className="cursor-pointer"
                     onPress={() => setSelected("login")}
                 >
-                    Войдите
+                   
                 </Link>
             </p>
             <div className="flex gap-2 justify-end">
                 <Button fullWidth color="primary" type="submit">
-                    Зарегистрироваться
+                   
                 </Button>
             </div>
         </form>
