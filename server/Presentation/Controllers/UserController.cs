@@ -1,7 +1,10 @@
 ﻿using server.Application.Interfaces;
 using server.Core.Models;
-
+using server.Application.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+using server.Core.DTO;
+using System.Security.Claims;
 
 namespace server.Presentation.Controllers
 {
@@ -66,6 +69,30 @@ namespace server.Presentation.Controllers
                 return NoContent();
           
               
+        }
+        [Authorize]
+        [HttpGet("current")]
+        public async Task<ActionResult> GetCurrentUser()
+        {
+            var userIdClaim= User.FindFirst(ClaimTypes.NameIdentifier);
+            if (userIdClaim == null)
+            {
+                return Unauthorized(new { message = "Пользователь не авторизован" });
+
+            }
+            int userId = int.Parse(userIdClaim.Value);
+            var user =await _userService.GetUserByIdAsync(userId);
+            if(user==null)
+            {
+                return NotFound(new { message = "Пользователь не найден" });
+            }
+            return Ok(new UserDto
+            {
+                Id = userId,
+                Username = user.UserName,
+                Email = user.Email,
+                role = user.Role
+            });
         }
         
     }
