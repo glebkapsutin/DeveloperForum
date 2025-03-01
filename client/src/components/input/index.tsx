@@ -9,7 +9,7 @@ type Props = {
     type?: string;
     control: Control<any>;
     required?: string;
-    endContent?: JSX.Element; // Например, иконка или кнопка в конце поля
+    endContent?: JSX.Element; 
 };
 
 export const Input: React.FC<Props> = ({
@@ -50,7 +50,7 @@ export const Input: React.FC<Props> = ({
                     <InputAdornment position="end">{endContent}</InputAdornment>
                 ) : null,
             }}
-            className="my-2" // Пример использования UnoCSS: отступы сверху и снизу (если настроен UnoCSS, можно использовать аналогичные утилитарные классы)
+            className="my-2" // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ UnoCSS: пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ UnoCSS, пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ)
         />
     );
 };

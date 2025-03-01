@@ -10,7 +10,7 @@ import {
 import { useNavigate } from "react-router-dom"
 import { useState } from "react"
 import { ErrorMessage } from "../../components/error-message"
-import { hasErrorField } from "../../utils/has-error-field"
+
 import { LoginRequest } from "../../app/types"
 import * as React from "react"
 type Props = {
@@ -32,18 +32,14 @@ export const Login = ({ setSelected }: Props) => {
     const [error, setError] = useState("");
     const [triggerCurrentQuery] = useGetUsersQuery();
     const onSubmit = async (data: LoginRequest) => {
-        try {
+        
             await login(data).unwrap();
 
             await triggerCurrentQuery();
 
             navigate("/");
-        }
-        catch (err) {
-            if (hasErrorField(err)) {
-                setError(err.data.error);
-            }
-        }
+        
+        
     };
     return (
         <form
@@ -62,7 +58,7 @@ export const Login = ({ setSelected }: Props) => {
             <Input
                 control={control} 
                 name="password" 
-                label="������" 
+                label="Пароль" 
                 type="password" 
                 required="Обязательное поле" 
                 errorMessage={errors.password?.message} 

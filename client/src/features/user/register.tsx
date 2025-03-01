@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form"
 import { Button, Link } from "@mui/material"
 import { useRegisterUserMutation } from "../../app/services/userApi"
 import { ErrorMessage } from "../../components/error-message"
-import { hasErrorField } from "../../utils/has-error-field"
+
 import { useState } from "react"
 import * as React from "react"
 
@@ -36,14 +36,10 @@ export const Register = ({ setSelected }: Props) => {
     const [error, setError] = useState("")
 
     const onSubmit = async (data: Register) => {
-        try {
+        
             await register(data).unwrap()
             setSelected("login")
-        } catch (err) {
-            if (hasErrorField(err)) {
-                setError(err.data.error)
-            }
-        }
+        
     }
 
     return (
@@ -77,12 +73,12 @@ export const Register = ({ setSelected }: Props) => {
                     className="cursor-pointer"
                     onPress={() => setSelected("login")}
                 >
-                   
+                   Войдите
                 </Link>
             </p>
             <div className="flex gap-2 justify-end">
                 <Button fullWidth color="primary" type="submit">
-                   
+                   Зарегистрируйтесь
                 </Button>
             </div>
         </form>
