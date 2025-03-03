@@ -71,7 +71,7 @@ namespace server.Application.Services
                 Password= _passwordHasher.HashPassword(null,request.Password),
                 Role = new Role{TypeOfRole = RoleType.User},
                 RoleId = 2,
-                AvatarUrl = "https://example.com/default-avatar.png"
+                AvatarUrl = "https://via.placeholder.com/150"
             };
             await _userRepository.AddUserAsync(user);
             return new AuthResult
@@ -105,7 +105,8 @@ namespace server.Application.Services
                 new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
                 new Claim(JwtRegisteredClaimNames.Email, user.Email),
                 new Claim(ClaimTypes.Role, user.Role.ToString()),
-                new Claim(ClaimTypes.NameIdentifier,user.Id.ToString())
+                new Claim(ClaimTypes.NameIdentifier,user.Id.ToString()),
+                
             };
 
             var token = new JwtSecurityToken(
