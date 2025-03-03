@@ -48,6 +48,7 @@ namespace server.Application.Services
                     Username = user.UserName,
                     Email = user.Email,
                     role = user.Role,
+                    AvatarUrl = user.AvatarUrl
                 }
             };
         }
@@ -69,24 +70,26 @@ namespace server.Application.Services
                 Email=request.Email,
                 Password= _passwordHasher.HashPassword(null,request.Password),
                 Role = new Role{TypeOfRole = RoleType.User},
-                RoleId = 2
+                RoleId = 2,
+                AvatarUrl = "https://example.com/default-avatar.png"
             };
             await _userRepository.AddUserAsync(user);
             return new AuthResult
             {
-                Success=true,
+                Success = true,
                 Message = "",
-                Token=GenerateJwtToken(user),
+                Token = GenerateJwtToken(user),
                 User = new UserDto
                 {
-                    Id=user.Id,
-                    Username=user.UserName,
-                    Email=user.Email,
-                    role =user.Role,
-                    
+                    Id = user.Id,
+                    Username = user.UserName,
+                    Email = user.Email,
+                    role = user.Role,
+                    AvatarUrl = user.AvatarUrl
 
 
-                } 
+
+                }
             };
             
         }

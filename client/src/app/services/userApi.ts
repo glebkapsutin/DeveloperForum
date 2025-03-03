@@ -18,7 +18,7 @@ export const userApi = api.injectEndpoints({
                 body: loginData,
             }),
         }),
-        // 2. POST /api/Auth/registerUser
+        // 2. POST /api/Auth/register
         registerUser: builder.mutation<AuthResult, RegistrationRequest>({
             query: (registerData) => ({
                 url: "/Auth/register",

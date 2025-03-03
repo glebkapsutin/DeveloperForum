@@ -3,15 +3,11 @@ import { useForm } from "react-hook-form"
 import { Button, Link } from "@mui/material"
 import { useRegisterUserMutation } from "../../app/services/userApi"
 import { ErrorMessage } from "../../components/error-message"
-
+import { RegistrationRequest } from "../../app/types";
 import { useState } from "react"
 import * as React from "react"
 
-type Register = {
-    email: string
-    name: string
-    password: string
-}
+
 
 type Props = {
     setSelected: (value: string) => void
@@ -22,7 +18,7 @@ export const Register = ({ setSelected }: Props) => {
         handleSubmit,
         control,
         formState: { errors },
-    } = useForm<Register>({
+    } = useForm<RegistrationRequest>({
         mode: "onChange",
         reValidateMode: "onBlur",
         defaultValues: {
@@ -35,7 +31,7 @@ export const Register = ({ setSelected }: Props) => {
     const [register] = useRegisterUserMutation()
     const [error, setError] = useState("")
 
-    const onSubmit = async (data: Register) => {
+    const onSubmit = async (data: RegistrationRequest) => {
         
             await register(data).unwrap()
             setSelected("login")
@@ -48,7 +44,7 @@ export const Register = ({ setSelected }: Props) => {
                 control={control}
                 required="Обязательное поле"
                 label="Имя"
-                name="name"
+                name="username"
             />
             <Input
                 control={control}
@@ -71,7 +67,7 @@ export const Register = ({ setSelected }: Props) => {
                 <Link
                     size="sm"
                     className="cursor-pointer"
-                    onPress={() => setSelected("login")}
+                    onClick={() => setSelected("login")}
                 >
                    Войдите
                 </Link>

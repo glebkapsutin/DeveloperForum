@@ -10,6 +10,7 @@ namespace server.Core.DTO
         public string Email { get; set; }
 
         public Role role{ get; set; }
-        public string AvatarUrl { get; set; }
+
+        public string? AvatarUrl { get; set; }
     }
 }

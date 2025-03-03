@@ -70,7 +70,7 @@ namespace server.Presentation.Controllers
           
               
         }
-        [Authorize]
+        
         [HttpGet("current")]
         public async Task<ActionResult> GetCurrentUser()
         {
@@ -91,7 +91,8 @@ namespace server.Presentation.Controllers
                 Id = userId,
                 Username = user.UserName,
                 Email = user.Email,
-                role = user.Role
+                role = user.Role,
+                AvatarUrl=user.AvatarUrl  
             });
         }
         

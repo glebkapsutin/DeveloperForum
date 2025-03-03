@@ -25,16 +25,16 @@ namespace server.Infrastructure.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            // ������������ ����� �������� � �����������
+            
             modelBuilder.Entity<Follows>()
                 .HasOne(f => f.Follower)
-                .WithMany(u => u.Followings)  // ������������ ����� ����� ����� ��������
+                .WithMany(u => u.Followings)  
                 .HasForeignKey(f => f.FollowerId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Follows>()
                 .HasOne(f => f.Following)
-                .WithMany(u => u.Followers)   // ������������ ����� ����� ����� �����������
+                .WithMany(u => u.Followers)   
                 .HasForeignKey(f => f.FollowingId)
                 .OnDelete(DeleteBehavior.Restrict);
         }
