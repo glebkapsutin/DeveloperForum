@@ -43,7 +43,7 @@ export const Register = ({ setSelected }: Props) => {
     }
 
     return (
-        <form className="flex flex-col gap-4 w-80 mx-auto p-4 bg-white shadow-md rounded-lg" onSubmit={handleSubmit(onSubmit)}>
+        <form className="flex flex-col gap-4 w-full mx-auto p-4" onSubmit={handleSubmit(onSubmit)}>
             <Input
                 control={control}
                 required="Обязательное поле"

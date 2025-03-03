@@ -42,6 +42,7 @@ export const Input: React.FC<Props> = ({
             onChange={field.onChange}
             onBlur={field.onBlur}
             error={invalid}
+            
             helperText={errors[name]?.message || ""}
             fullWidth
             variant="outlined"
@@ -50,7 +51,7 @@ export const Input: React.FC<Props> = ({
                     <InputAdornment position="end">{endContent}</InputAdornment>
                 ) : null,
             }}
-            className="my-2" // ������ ������������� UnoCSS: ������� ������ � ����� (���� �������� UnoCSS, ����� ������������ ����������� ����������� ������)
+            className="my-2" 
         />
     );
 };

@@ -26,14 +26,14 @@ export const userApi = api.injectEndpoints({
                 body: registerData,
             }),
         }),
-        // 3. GET /api/User (получение списка пользователей)
+        // 3. GET /api/User (пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ)
         getUsers: builder.query<UserDto[], void>({
             query: () => ({
                 url: "/User",
                 method: "GET",
             }),
         }),
-        // 4. POST /api/User (создание нового пользователя)
+        // 4. POST /api/User (пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ)
         createUser: builder.mutation<UserDto, Partial<UserDto>>({
             query: (newUser) => ({
                 url: "/User",
@@ -41,21 +41,21 @@ export const userApi = api.injectEndpoints({
                 body: newUser,
             }),
         }),
-        // 5. GET /api/User/{id} (получение пользователя по ID)
+        // 5. GET /api/User/{id} (пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ ID)
         getUserById: builder.query<UserDto, number>({
             query: (id) => ({
                 url: `/User/${id}`,
                 method: "GET",
             }),
         }),
-        // 6. DELETE /api/User/{id} (удаление пользователя по ID)
+        // 6. DELETE /api/User/{id} (пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ ID)
         deleteUser: builder.mutation<{ success: boolean; id: number }, number>({
             query: (id) => ({
                 url: `/User/${id}`,
                 method: "DELETE",
             }),
         }),
-        // 7. PUT /api/User/{id} (обновление данных пользователя)
+        // 7. PUT /api/User/{id} (пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ)
         updateUser: builder.mutation<UserDto, { id: number; userData: Partial<UserDto> }>({
             query: ({ id, userData }) => ({
                 url: `/User/${id}`,
@@ -63,6 +63,12 @@ export const userApi = api.injectEndpoints({
                 body: userData,
             }),
         }),
+        current: builder.query<UserDto,void>({
+            query: ()=> ({
+                url:`/User/current`,
+                method: "GET"
+            })
+        })
     }),
 });
 
@@ -74,4 +80,8 @@ export const {
     useGetUserByIdQuery,
     useDeleteUserMutation,
     useUpdateUserMutation,
+    useCurrentQuery
 } = userApi;
+export const {
+    endpoints: { login, registerUser, current, getUserById, updateUser,getUsers,createUser}
+  } = userApi;

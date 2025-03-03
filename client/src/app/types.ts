@@ -3,10 +3,12 @@
  * ���� � DTO, ��������������� ������� �������.
  */
 
-/** ��������� ���� ����� ������������ (�� ������ server.Core.Enums) */
+import { Avatar } from "@mui/material";
+
+
 export type RoleType = "Admin" | "User";
 
-/** ������ ���� */
+
 export type Role = {
     id: number;
     typeOfRole: RoleType;
@@ -26,15 +28,16 @@ export type Follows = {
     followingId: number;
 }
 
-/** ������ ������������ */
+
 export type User = {
     id: number;
-    userName: string;      // ������������� UserName �� �������
+    userName: string;      
     email: string;
-    password: string;      // ������ ������ �� ���������� �� ������, �� �� ����� ��� ������� ������
-    registeredAt: string;  // ���� � ������� ISO
-    posts?: Post[];        // ������ ������, ����� ���� ������
+    password: string;      
+    registeredAt: string;  
+    posts?: Post[];        
     role: Role;
+    avatar: string;
     roleId: number;
     followers: Follows[];
     followings: Follows[];
@@ -102,6 +105,7 @@ export type UserDto = {
     email: string;
     registeredAt: string;
     role: Role;
+    avatar: string;
 };
 
 /** ��������� �������������� */
