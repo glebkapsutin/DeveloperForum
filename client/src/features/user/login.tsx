@@ -26,8 +26,7 @@ export const Login = ({ setSelected }: Props) => {
   const onSubmit = async (data: LoginRequest) => {
     try {
       await login(data).unwrap();
-      await triggerCurrentQuery();
-      navigate("/");
+     
     } catch {
       setError("Ошибка входа. Проверьте данные.");
     }

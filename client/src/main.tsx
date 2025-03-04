@@ -16,6 +16,8 @@ import { Following } from "./pages/following/index";
 import { RouterProvider } from "../node_modules/react-router-dom/dist/index";
 import { Auth } from "./pages/auth/index";
 import "uno.css";
+import { AuthGuard } from "./features/ AuthGuard"
+
 
 const router = createBrowserRouter([
   {
@@ -54,7 +56,9 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <Provider store={store}>
       <CustomThemeProvider>
-        <RouterProvider router={router } />
+        <AuthGuard>
+          <RouterProvider router={router } />
+        </AuthGuard>
       </CustomThemeProvider>
     </Provider>
   </React.StrictMode>
