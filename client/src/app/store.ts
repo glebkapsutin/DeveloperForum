@@ -1,13 +1,14 @@
 /* eslint-disable @typescript-eslint/consistent-type-imports */
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit"
 import { api } from "./services/api"
-import auth from "../features/user/userSlice"
+
 import { listenerMiddleware } from "../middleware/auth"
+import user from "../features/user/userSlice"
 
 export const store = configureStore({
     reducer: {
         [api.reducerPath]: api.reducer,
-        auth,
+        user
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware()

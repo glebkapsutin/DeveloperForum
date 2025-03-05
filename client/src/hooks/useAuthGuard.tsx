@@ -7,9 +7,9 @@ export const useAuthGuard=() =>{
     const isAuthenticated = useSelector(selectIsAuthenticated)
     const navigate= useNavigate()
     useEffect(()=>{
-        if(isAuthenticated)
-            {
+        if (isAuthenticated) { 
+        
                 navigate("/")
-            }
+        }
     },[])
 }

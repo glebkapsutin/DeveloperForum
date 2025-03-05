@@ -23,14 +23,18 @@ export const Login = ({ setSelected }: Props) => {
   const [error, setError] = useState("");
   const { refetch: triggerCurrentQuery } = useCurrentQuery();
 
-  const onSubmit = async (data: LoginRequest) => {
-    try {
-      await login(data).unwrap();
-     
-    } catch {
-      setError("Ошибка входа. Проверьте данные.");
-    }
-  };
+    const onSubmit = async (data: LoginRequest) => {
+        try {
+            await login(data).unwrap();
+            // Если требуется, можно выполнить refetch, например:
+            await triggerCurrentQuery();
+            // Теперь перенаправляем пользователя на главную страницу
+            navigate("/");
+        } catch {
+            setError("Ошибка входа. Проверьте данные.");
+        }
+    };
+
 
   return (
     <form className="flex flex-col gap-4 w-full mx-auto p-4" onSubmit={handleSubmit(onSubmit)}>

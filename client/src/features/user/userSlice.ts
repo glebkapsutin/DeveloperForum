@@ -72,6 +72,7 @@ const slice = createSlice({
 export const { logout, resetUser } = slice.actions
 export default slice.reducer
 
-export const selectIsAuthenticated = (state: RootState) => state.auth.isAuthenticated
-export const selectCurrent = (state: RootState) => state.auth.current
-export const selectUsers = (state: RootState) => state.auth.users
+export const selectIsAuthenticated = (state: RootState) => state.user.isAuthenticated
+export const selectCurrent = (state: RootState) => state.user.current
+export const selectUsers = (state: RootState) => state.user.users
+export const selectUser = (state: RootState) => state.user.user

@@ -7,18 +7,22 @@ import { Outlet, useNavigate } from "react-router-dom"
 import { Container } from "../container/index"
 import { Grid } from "@mui/material"
 import { useSelector } from "react-redux"
-import { selectIsAuthenticated, selectUsers } from "../../features/user/userSlice"
+import { selectIsAuthenticated, selectUser} from "../../features/user/userSlice"
 
 export const Layout = () => {
     const isAuthenticated = useSelector(selectIsAuthenticated);
-    const user= useSelector(selectUsers);
+    const user= useSelector(selectUser);
     const navigate = useNavigate();
-    useEffect(()=>{
-        if(!isAuthenticated)
-            {
-                navigate('/auth')
-            }
-    },[])
+   
+
+    useEffect(() => {
+        
+       
+        if (!isAuthenticated ) {
+            navigate("/Auth");
+        } 
+    }, []);
+
 
     return (
         <>
