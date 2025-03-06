@@ -71,7 +71,7 @@ namespace server.Application.Services
                 Password= _passwordHasher.HashPassword(null,request.Password),
                 Role = new Role{TypeOfRole = RoleType.User},
                 RoleId = 2,
-                AvatarUrl = "https://via.placeholder.com/150"
+                AvatarUrl = "https://cdn-icons-png.flaticon.com/512/456/456212.png"
             };
             await _userRepository.AddUserAsync(user);
             return new AuthResult
@@ -106,6 +106,8 @@ namespace server.Application.Services
                 new Claim(JwtRegisteredClaimNames.Email, user.Email),
                 new Claim(ClaimTypes.Role, user.Role?.TypeOfRole.ToString() ?? "User"),
                 new Claim(ClaimTypes.NameIdentifier,user.Id.ToString()),
+          
+
                 
             };
 

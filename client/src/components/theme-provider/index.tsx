@@ -32,7 +32,7 @@ export const CustomThemeProvider = ({ children }: { children: React.ReactNode })
                 },
                 typography: {
                     allVariants: {
-                        fontFamily: "Roboto, Arial, sans-serif", // Исправляем шрифты
+                        fontFamily: "Roboto, Arial, sans-serif", // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
                     },
                 },
             }),
@@ -48,7 +48,7 @@ export const CustomThemeProvider = ({ children }: { children: React.ReactNode })
                         body: {
                             backgroundColor: theme.palette.background.default,
                             color: theme.palette.mode === "dark" ? "#ffffff" : "#000000",
-                            transition: "background-color 0.3s ease-in-out, color 0.3s ease-in-out",
+                            transition: "background-color 0.1s ease-in-out, color 0.1s ease-in-out",
                         },
                     }}
                 />

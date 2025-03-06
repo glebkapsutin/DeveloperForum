@@ -9,7 +9,7 @@ export const Header = () => {
   return (
     <AppBar
       position="static"
-      elevation={0}
+  
       sx={{
         bgcolor: theme.palette.background.default,
         color: theme.palette.text.primary,
