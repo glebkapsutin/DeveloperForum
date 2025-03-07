@@ -1,11 +1,27 @@
-import { AppBar, Toolbar, Typography, Box } from "@mui/material";
+import { AppBar, Toolbar, Typography, Box, Button } from "@mui/material";
 import ThemeToggle from "../theme-provider/ThemeToggle";
 import * as React from "react";
 import { useTheme } from "@mui/material/styles";
+import { useDispatch, useSelector } from "react-redux";
+import { logout, selectIsAuthenticated } from "../../features/user/userSlice";
+import { useNavigate } from "react-router-dom";
+import { NavBar } from "../nav-bar";
+import { CiLogout } from "react-icons/ci";
+
 
 export const Header = () => {
   const theme = useTheme();
+  const dispatch =useDispatch();
+  const navigate = useNavigate();
+  const isAuthenticated = useSelector(selectIsAuthenticated);
 
+
+  const handleLogout = ()=>
+    {
+      dispatch(logout());
+      localStorage.removeItem('token');
+      navigate('/auth');
+    }
   return (
     <AppBar
       position="static"
@@ -49,6 +65,17 @@ export const Header = () => {
         >
           <ThemeToggle />
         </Box>
+        <Box>
+          {
+            isAuthenticated && (
+            <Button   onClick={handleLogout} sx={{color:theme.palette.text.primary ,display: "flex",
+              alignItems: "center",gap: "8px","&:hover": { backgroundColor: "darkgray" }}}>
+             <CiLogout /> <span>Выйти</span>
+            </Button>)
+          }
+          
+        </Box>
+
       </Toolbar>
     </AppBar>
   );

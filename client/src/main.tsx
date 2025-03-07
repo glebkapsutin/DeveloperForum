@@ -21,7 +21,7 @@ import { AuthGuard } from "./features/ AuthGuard"
 
 const router = createBrowserRouter([
   {
-    path: '/Auth',
+    path: '/auth',
     element:<Auth />
   },
   {
