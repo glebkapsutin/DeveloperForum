@@ -4,7 +4,7 @@ import { api } from "./api";
 
 export const postApi = api.injectEndpoints({
     endpoints: (builder) => ({
-        // Создание поста
+       
         createPost: builder.mutation<Post, Omit<Post, "id" | "createdDate">>({
             query: (postData) => ({
                 url: "/Post",
@@ -13,7 +13,7 @@ export const postApi = api.injectEndpoints({
             }),
         }),
 
-        // Получение всех постов
+        
         getAllPosts: builder.query<Post[], void>({
             query: () => ({
                 url: "/Post",
@@ -21,7 +21,7 @@ export const postApi = api.injectEndpoints({
             }),
         }),
 
-        // Получение поста по ID
+        
         getPostById: builder.query<Post, number>({
             query: (id) => ({
                 url: `/Post/${id}`,
@@ -29,7 +29,7 @@ export const postApi = api.injectEndpoints({
             }),
         }),
 
-        // Удаление поста
+        
         deletePost: builder.mutation<void, number>({
             query: (id) => ({
                 url: `/Post/${id}`,
@@ -37,7 +37,7 @@ export const postApi = api.injectEndpoints({
             }),
         }),
 
-        // Обновление поста (обновляем только title и description)
+        
         updatePost: builder.mutation<Post, { id: number; data: Pick<Post, "title" | "description"> }>({
             query: ({ id, data }) => ({
                 url: `/Post/${id}`,
