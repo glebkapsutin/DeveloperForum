@@ -2,6 +2,7 @@
 using server.Core.Models;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Configuration.UserSecrets;
 
 namespace server.Application.Services
 {
@@ -9,30 +10,40 @@ namespace server.Application.Services
     {
         private readonly IPostRepository _repository;
 
+        private readonly IUserRepository _userRepository;
+
         private readonly ILogger<PostService> _logger;
-        public PostService(IPostRepository repository, ILogger<PostService> logger) 
+
+        public PostService(IPostRepository repository, ILogger<PostService> logger,IUserRepository userRepository)
         {
             _repository = repository;
             _logger = logger;
+            _userRepository = userRepository;
         }
 
         public async Task<Post> CreatePost(Post post)
-        {
-            CheckTitlePost(post);
-            try
+        {   
+            if (string.IsNullOrWhiteSpace(post.Title) || string.IsNullOrWhiteSpace(post.Description))
             {
+                throw new ArgumentException("Все поля обязательны");
+            }
+
+            try
+            {   
                 await _repository.AddPost(post);
+
+                // Загружаем автора поста по `UserId`
+                post.User = await _userRepository.GetUserByIdAsync(post.UserId);
+                
                 return post;
-
-
             }
             catch (Exception ex)
             {
-                 _logger.LogError(ex, $"Error creating Post with title: {post.Title}", post.Title);
-                throw new Exception("Error creating Post In Service",ex);
+                _logger.LogError(ex, $"Error creating Post with title: {post.Title}");
+                throw new Exception("Ошибка при создании поста", ex);
             }
-
         }
+
 
         public async Task<IEnumerable<Post>> GetAllPosts()
         {

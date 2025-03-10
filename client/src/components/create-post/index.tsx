@@ -21,8 +21,15 @@ export const CreatePost = () => {
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      await createPost({ content: data.post }).unwrap();
-      setValue('post', '');
+      await createPost({ 
+        title: data.title,
+        description: data.description,
+        
+
+                          
+      }).unwrap();
+      setValue('title', '');
+      setValue('description', '');
       await triggerAllPosts().unwrap();
     } catch (error) {
       console.log(error);
@@ -32,19 +39,40 @@ export const CreatePost = () => {
   return (
     <form className='flex flex-col gap-4' onSubmit={onSubmit}>
       <Controller
-        name='post'
+        name='title'
         control={control}
         defaultValue=''
         rules={{ required: 'Обязательное поле' }}
         render={({ field }) => (
           <TextField
             {...field}
-            label='О чем думаете?'
+            label='Заголовок'
             variant='outlined'
             fullWidth
-            error={!!errors.post}
-            helperText={errors.post ? errors.post.message : ''}
+            error={!!errors.title}
+            helperText={errors.title ? errors.title.message : ''}
             className='mb-2'
+          />
+          
+        )}
+
+      />
+      <Controller
+        name='description'
+        control={control}
+        defaultValue=''
+        rules={{ required: 'Обязательное поле' }}
+        render={({ field }) => (
+          <TextField
+            {...field}
+            label='Опиcание'
+            variant='outlined'
+            fullWidth
+            error={!!errors.description}
+            helperText={errors.description ? errors.description.message : ''}
+            className='mb-2'
+            multiline
+            rows={4}
           />
         )}
       />
