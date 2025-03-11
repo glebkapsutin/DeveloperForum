@@ -37,11 +37,12 @@ export const CreatePost = () => {
   });
 
   return (
-    <form className='flex flex-col gap-4' onSubmit={onSubmit}>
-      <Controller
+    <form className='flex flex-col gap-4' onSubmit={onSubmit} >
+      <Controller 
         name='title'
         control={control}
         defaultValue=''
+        
         rules={{ required: 'Обязательное поле' }}
         render={({ field }) => (
           <TextField
@@ -52,6 +53,9 @@ export const CreatePost = () => {
             error={!!errors.title}
             helperText={errors.title ? errors.title.message : ''}
             className='mb-2'
+            InputProps={{
+              sx: { borderRadius: '12px' }
+            }}
           />
           
         )}
@@ -73,6 +77,9 @@ export const CreatePost = () => {
             className='mb-2'
             multiline
             rows={4}
+            InputProps={{
+              sx: { borderRadius: '12px' }
+            }}
           />
         )}
       />
@@ -84,7 +91,8 @@ export const CreatePost = () => {
         variant='contained'
         color='success'
         endIcon={<IoMdCreate />}
-        className='self-end'
+        className='self-start'
+        sx={{ borderRadius: '12px' }}
       >
         Добавить пост
       </Button>

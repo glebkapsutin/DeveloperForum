@@ -44,38 +44,38 @@ export type User = {
 
 };
 
-/** ������ ����� */
+
 export type Post = {
     id: number;
     title: string;
     description: string;
     author: string;
-    createdDate?: string;  // ���� ����� ���� ������������� (null)
-    comments?: Comment[];  // ������ ������������
-    user?: User;           // ����� �����
+    createdDate?: string;  
+    comments?: Comment[];  
+    user?: User;           
     userId: number;
     likes: Likes[];
 };
 
-/** ������ ����������� */
+
 export type Comment = {
     id: number;
     post: Post;
     postId: number;
     description: string;
     author: string;
-    createdDate: string;  // ���� � ������� ISO
+    createdDate: string;  
 };
 
-/** ������ ��������� */
+
 export type Category = {
     id: number;
     title: string;
     description: string;
-    posts?: Post[];        // ������ ������, ��������� � ����������
+    posts?: Post[];       
 };
 
-/** ��������� JWT */
+
 export type JwtSettings = {
     secret: string;
     issuer: string;
@@ -83,22 +83,22 @@ export type JwtSettings = {
     expireMinutes: number;
 };
 
-/* DTO */
 
-/** ������ �� ����������� */
+
+
 export type RegistrationRequest = {
-    username: string;  // ������������� Username �� �������
+    username: string;  
     email: string;
     password: string;
 };
 
-/** ������ �� ����� */
+
 export type LoginRequest = {
     email: string;
     password: string;
 };
 
-/** DTO ������������ (��� ������) */
+
 export type UserDto = {
     id: number;
     userName: string;
@@ -108,10 +108,10 @@ export type UserDto = {
     avatar: string;
 };
 
-/** ��������� �������������� */
+
 export type AuthResult = {
     success: boolean;
     message: string;
-    token: string;    // JWT-�����, ���� �������� �������
+    token: string;    
     user: UserDto;
 };

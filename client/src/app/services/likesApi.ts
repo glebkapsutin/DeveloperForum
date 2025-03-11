@@ -1,5 +1,9 @@
+/**
+ * ���� � DTO, ��������������� ������� �������.
+ */
 import {Likes} from "../types";
 import { api } from "./api";
+
 export const likesApi = api.injectEndpoints({
     endpoints: (builder) => ({
       likePost: builder.mutation<{ message: string }, { postId: number; userId: number }>({
