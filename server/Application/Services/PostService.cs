@@ -3,6 +3,7 @@ using server.Core.Models;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration.UserSecrets;
+using server.Core.DTO;
 
 namespace server.Application.Services
 {
@@ -21,21 +22,31 @@ namespace server.Application.Services
             _userRepository = userRepository;
         }
 
-        public async Task<Post> CreatePost(Post post)
-        {   
+        public async Task<PostDTO> CreatePost(Post post)
+        {
             if (string.IsNullOrWhiteSpace(post.Title) || string.IsNullOrWhiteSpace(post.Description))
             {
                 throw new ArgumentException("Все поля обязательны");
             }
 
             try
-            {   
+            {
                 await _repository.AddPost(post);
 
-                // Загружаем автора поста по `UserId`
+                // Загружаем автора поста
                 post.User = await _userRepository.GetUserByIdAsync(post.UserId);
-                
-                return post;
+
+                return new PostDTO
+                {
+                    Id = post.Id,
+                    Title = post.Title,
+                    Description = post.Description,
+                    CreatedDate = post.CreatedDate,
+                    Author = post.User?.UserName,
+                    AvatarUrl = post.User?.AvatarUrl,
+                    CommentsCount = post.Comments?.Count ?? 0,
+                    LikesCount = post.Likes?.Count ?? 0
+                };
             }
             catch (Exception ex)
             {

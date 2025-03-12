@@ -1,6 +1,6 @@
 ﻿using server.Application.Interfaces;
 using server.Core.Models;
-
+using server.Core.DTO;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
@@ -49,39 +49,25 @@ namespace server.Presentation.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Post>> CreatePost([FromBody] Post post)
-        {   
-            var userIdClaim= User.FindFirst(ClaimTypes.NameIdentifier);
+        public async Task<ActionResult<PostDTO>> CreatePost([FromBody] Post post)
+        {
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
             if (userIdClaim == null)
-            {
                 return Unauthorized(new { message = "Пользователь не авторизован" });
 
-            }
-           if (!int.TryParse(userIdClaim.Value, out int userId))
-            {
+            if (!int.TryParse(userIdClaim.Value, out int userId))
                 return BadRequest(new { error = "Некорректный ID пользователя" });
-            }
-            
-            post.UserId = userId;
-           
-            
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            
-                var createdPost = await _postService.CreatePost(post);
 
-        return CreatedAtAction(nameof(GetPostById), new { id = createdPost.Id }, new
-        {
-            createdPost.Id,
-            createdPost.Title,
-            createdPost.Description,
-            createdPost.CreatedDate,
-            createdPost.User,
-            Author = createdPost.User?.UserName
-            
-        });
+            post.UserId = userId;
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var createdPost = await _postService.CreatePost(post);
+
+            return CreatedAtAction(nameof(GetPostById), new { id = createdPost.Id }, createdPost);
+        }
+
             
            
 

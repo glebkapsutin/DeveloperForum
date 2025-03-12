@@ -10,9 +10,9 @@ namespace server.Core.Models
         
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)] 
         public DateTime? CreatedDate { get; set; } = DateTime.UtcNow;
-
+        
         public ICollection<Comment>? Comments { get; set; } = new List<Comment>();
-
+      
         public ICollection<Likes>? Likes{get ;set; } = new List<Likes>();
 
         public User? User { get; set; }
