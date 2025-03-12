@@ -5,11 +5,17 @@ import { useDeleteCommentMutation } from '../../app/services/commentApi';
 import { useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { selectCurrent } from '../../features/user/userSlice';
-import { Box, Card, CardContent, CircularProgress } from '@mui/material';
+import { CardHeader, CardContent, CardActions, Box, CircularProgress } from "@mui/material";
+import { Card as MuiCard } from '@mui/material';
+
 import { User } from '../user';
+import { ErrorMessage } from "../error-message"
 import {formatToClientDate} from '../../utils/format-to-client-date'
 import { hasErrorField } from '../../utils/has-error-field';
 import { RiDeleteBinLine } from 'react-icons/ri';
+import { Typography } from '../typography';
+import { MetaInfo } from "../meta-info"
+import { FcDislike } from "react-icons/fc"
 
 type Props = {
     avatarUrl: string;
@@ -122,8 +128,8 @@ export const Card: React.FC<Props> = ({
     };
   
     return (
-        <Card className='mb-5'>
-            <CardContent className='justify-between items-center bg-transpare'>
+        <MuiCard className='mb-5'>
+            <CardHeader className="flex justify-between items-center bg-transparent">
                 <Link to={`/User/${authorId}`}>
                     <User
                         name={name}
@@ -143,13 +149,37 @@ export const Card: React.FC<Props> = ({
                             )}
 
                         </Box>
-                    )
-                    
+                    )}
+            </CardHeader>
+                <CardContent className="px-3 py-2 mb-5">
+                    <Typography variant="body1" >{title}</Typography>
+                    <Typography variant="body2">{description} </Typography>
+                </CardContent>
 
-                }
-                
-            </CardContent>
-        </Card>
+            {/* Нижняя часть карточки (действия) */}
+            {cardFor !== "comment" && (
+                <CardActions className="gap-3">
+                    <Box className="flex gap-5 items-center">
+                        {/* Иконка лайка с количеством */}
+                        <Box onClick={handleClick} className="cursor-pointer">
+                            <MetaInfo
+                                count={likesCount}
+                                Icon={likedByUser ? FcDislike : MdOutlineFavoriteBorder}
+                            />
+                        </Box>
+
+                        {/* Ссылка для перехода к детальному просмотру поста */}
+                        <Link to={`/posts/${id}`}>
+                            <MetaInfo count={commentsCount} Icon={FaRegComment} />
+                        </Link>
+                    </Box>
+
+                    {/* Отображение ошибки, если есть */}
+                    <ErrorMessage error={error} />
+                </CardActions>
+            )}
+            
+        </MuiCard>
     
     )
 }

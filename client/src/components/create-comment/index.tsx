@@ -1,10 +1,10 @@
 import React from 'react';
-import { useCreatePostMutation, useLazyGetPostByIdQuery } from '../../app/services/postsApi';
+import { useCreatePostMutation, useLazyGetPostByIdQuery } from '../../app/services/postApi';
 import { Controller, useForm } from 'react-hook-form';
 import { Button, TextField } from '@mui/material';
 import { IoMdCreate } from 'react-icons/io';
 import { useParams } from 'react-router-dom';
-import { useCreateCommentMutation } from '../../app/services/commentsApi';
+import { useCreateCommentMutation } from '../../app/services/commentApi';
 
 export const CreateComment = () => {
   const { id } = useParams<{ id: string }>();
