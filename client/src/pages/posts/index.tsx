@@ -11,27 +11,26 @@ export const Posts = () => {
             <div className="mb-10 w-full">
                 <CreatePost />
             </div>
-            {data  > 0
+            {data?.length > 0
                 ? data.map(post => {
-                    const { title, description, createdDate, id, user, likes, comments, likedByUser } = post;
+                    const { title, description, createdDate, id, author, avatarUrl, likesCount, commentsCount } = post;
                     return (
                         <Card
                             key={id}
-                            avatarUrl={user?.avatarUrl ?? ""}
+                            avatarUrl={avatarUrl ?? ""}
                             title={title}
                             description={description}
-                            name={user?.userName ?? ""}
-                            likesCount={likes?.$values?.length || 0}
-                            commentsCount={comments?.$values?.length || 0}
-                            authorId={user?.id ? user.id.toString() : ""}
+                            name={author ?? ""}
+                            likes={likesCount}
+                            comments={commentsCount}
+                            authorId={id.toString()}
                             id={id}
-                            likedByUser={likedByUser}
-                            createdAt={createdDate}
+                            createdDate={createdDate}
                             cardFor="post"
                         />
                     );
                 })
-                : null}
+                : <p>Постов пока нет</p>}
         </>
     );
 };

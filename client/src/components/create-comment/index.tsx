@@ -1,5 +1,5 @@
 import React from 'react';
-import { useCreatePostMutation, useLazyGetPostByIdQuery } from '../../app/services/postApi';
+import { useLazyGetPostByIdQuery } from '../../app/services/postApi';
 import { Controller, useForm } from 'react-hook-form';
 import { Button, TextField } from '@mui/material';
 import { IoMdCreate } from 'react-icons/io';
@@ -21,7 +21,7 @@ export const CreateComment = () => {
   const onSubmit = handleSubmit(async (data) => {
     try {
       if (id) {
-        await createComment({ content: data.comment, postId: id }).unwrap();
+        await createComment({ description: data.comment, postId: id }).unwrap();
         setValue('comment', '');
         await getPostById(id).unwrap();
       }

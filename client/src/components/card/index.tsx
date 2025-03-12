@@ -21,7 +21,7 @@ import { FaRegComment } from 'react-icons/fa';
 type Props = {
     avatarUrl: string;
     name: string;
-    authorId: string;
+    authorId: number;
     title: string;
     description: string;
     likes: any;
@@ -55,17 +55,15 @@ export const Card: React.FC<Props> = ({
     const navigate = useNavigate();
     const currentUser = useSelector(selectCurrent);
 
+    // Гарантируем, что comments и likes всегда массив
+    const likesArray = Array.isArray(likes) ? likes : likes?.$values || [];
+    const commentsArray = Array.isArray(comments) ? comments : comments?.$values || [];
+
     const refetchPosts = async () => {
-        switch (cardFor) {
-            case 'post':
-            case 'current-post':
-                await triggerGetAllPosts().unwrap();
-                break;
-            case 'comment':
-                await triggerGetPostById(id).unwrap();
-                break;
-            default:
-                throw new Error('Неверный аргумент cardFor');
+        if (cardFor === 'post' || cardFor === 'current-post') {
+            await triggerGetAllPosts().unwrap();
+        } else if (cardFor === 'comment') {
+            await triggerGetPostById(id).unwrap();
         }
     };
 
@@ -78,48 +76,33 @@ export const Card: React.FC<Props> = ({
             }
             if (cardFor === 'current-post') {
                 await triggerGetPostById(id).unwrap();
-            }
-            if (cardFor === 'post') {
+            } else if (cardFor === 'post') {
                 await triggerGetAllPosts().unwrap();
             }
         } catch (err) {
-            if (hasErrorField(err)) {
-                setError(err.data.error);
-            } else {
-                setError(err as string);
-            }
+            setError(hasErrorField(err) ? err.data.error : String(err));
         }
     };
 
     const handleDelete = async () => {
         try {
-            switch (cardFor) {
-                case 'post':
-                case 'current-post':
-                    await deletePost(id).unwrap();
-                    await refetchPosts();
-                    if (cardFor === 'current-post') navigate('/');
-                    break;
-                case 'comment':
-                    await deleteComment(id).unwrap();
-                    await refetchPosts();
-                    break;
-                default:
-                    throw new Error('Неверный аргумент cardFor');
+            if (cardFor === 'post' || cardFor === 'current-post') {
+                await deletePost(id).unwrap();
+                await refetchPosts();
+                if (cardFor === 'current-post') navigate('/');
+            } else if (cardFor === 'comment') {
+                await deleteComment(id).unwrap();
+                await refetchPosts();
             }
         } catch (err) {
-            if (hasErrorField(err)) {
-                setError(err.data.error);
-            } else {
-                setError(err as string);
-            }
+            setError(hasErrorField(err) ? err.data.error : String(err));
         }
     };
 
     return (
-        <MuiCard className="mb-5">
+        <MuiCard className="mb-5" sx={{ borderRadius: '12px' }}>
             <CardHeader className="flex justify-between items-center bg-transparent">
-                <Link to={`/users/${authorId}`}>
+                <Link to={`/User/${authorId}`}>
                     <User
                         name={name}
                         className="text-sm font-semibold leading-none text-default-600"
@@ -145,13 +128,10 @@ export const Card: React.FC<Props> = ({
                 <CardActions className="gap-3">
                     <Box className="flex gap-5 items-center">
                         <Box onClick={handleClick} className="cursor-pointer">
-                            <MetaInfo
-                                count={likes?.$values?.length || 0}
-                                Icon={likedByUser ? FcDislike : MdOutlineFavoriteBorder}
-                            />
+                            <MetaInfo count={likesArray.length} Icon={likedByUser ? FcDislike : MdOutlineFavoriteBorder} />
                         </Box>
-                        <Link to={`/posts/${id}`}>
-                            <MetaInfo count={comments?.$values?.length || 0} Icon={FaRegComment} />
+                        <Link to={`/Post/${id}`}>
+                            <MetaInfo count={commentsArray.length} Icon={FaRegComment} />
                         </Link>
                     </Box>
                     <ErrorMessage error={error} />

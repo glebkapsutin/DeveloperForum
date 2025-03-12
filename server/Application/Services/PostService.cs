@@ -42,10 +42,11 @@ namespace server.Application.Services
                     Title = post.Title,
                     Description = post.Description,
                     CreatedDate = post.CreatedDate,
-                    Author = post.User?.UserName,
+                    AuthorId = post.User?.Id,
                     AvatarUrl = post.User?.AvatarUrl,
                     CommentsCount = post.Comments?.Count ?? 0,
-                    LikesCount = post.Likes?.Count ?? 0
+                    LikesCount = post.Likes?.Count ?? 0,
+                    Name = post.User.UserName,
                 };
             }
             catch (Exception ex)

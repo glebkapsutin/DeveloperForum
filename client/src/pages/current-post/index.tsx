@@ -12,41 +12,39 @@ export const CurrentPost = () => {
         return <h2>Поста не существует</h2>;
     }
 
-    const { title, description, createdDate, id, user, likes, comments, likedByUser } = data;
+    const { title, description, createdDate, id, author, avatarUrl, likesCount, commentsCount, comments } = data;
 
     return (
         <>
             <Card
                 cardFor="current-post"
-                avatarUrl={user?.avatarUrl ?? ""}
+                avatarUrl={avatarUrl ?? ""}
                 title={title}
                 description={description}
-                name={user?.userName ?? ""}
-                likesCount={likes?.$values?.length || 0}
-                commentsCount={comments?.$values?.length || 0}
-                authorId={user?.id ? user.id.toString() : ""}
+                name={author ?? ""}
+                likes={likesCount}
+                comments={commentsCount}
+                authorId={id.toString()}
                 id={id}
-                likedByUser={likedByUser}
-                createdAt={createdDate}
+                createdDate={createdDate}
             />
             <div className="mt-10">
                 <CreateComment />
             </div>
             <div className="mt-10">
-                {comments && comments.$values && comments.$values.length > 0
-                    ? comments.$values.map((comment: any) => (
+                {comments && comments.length > 0
+                    ? comments.map((comment: any) => (
                         <Card
                             cardFor="comment"
                             key={comment.id}
-                            avatarUrl={comment.user?.avatarUrl ?? ""}
-                            content={comment.content}
-                            name={comment.user?.userName ?? ""}
+                            avatarUrl={comment.avatarUrl ?? ""}
+                            title={comment.author ?? ""}
+                            description={comment.description}
                             authorId={comment.userId.toString()}
-                            commentId={comment.id}
-                            id={id}
+                            id={comment.id}
                         />
                     ))
-                    : null}
+                    : <p>Комментариев пока нет</p>}
             </div>
         </>
     );

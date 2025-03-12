@@ -5,11 +5,13 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using server.Application.Interfaces;
 using server.Core.Models;
-
+using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Mvc;
 namespace server.Presentation.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+   
     public class LikesController : ControllerBase
     {
         private readonly ILikesService _likesService;
