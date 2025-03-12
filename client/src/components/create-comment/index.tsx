@@ -58,6 +58,9 @@ export const CreateComment = () => {
         endIcon={<IoMdCreate />}
         type="submit"
         className="mt-4"
+        InputProps={{
+              sx: { borderRadius: '12px' }
+        }}
       >
         Ответить
       </Button>

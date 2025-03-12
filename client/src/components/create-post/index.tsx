@@ -25,6 +25,7 @@ export const CreatePost = () => {
         title: data.title,
         description: data.description,
         
+        
 
                           
       }).unwrap();

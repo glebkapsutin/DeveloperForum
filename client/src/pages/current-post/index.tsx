@@ -12,7 +12,18 @@ export const CurrentPost = () => {
         return <h2>Поста не существует</h2>;
     }
 
-    const { title, description, createdDate, id, author, avatarUrl, likesCount, commentsCount, comments } = data;
+    const {
+        title,
+        description,
+        createdDate,
+        id,
+        authorId,
+        avatarUrl,
+        name,
+        likesCount,
+        commentsCount,
+        comments,
+    } = data;
 
     return (
         <>
@@ -21,10 +32,10 @@ export const CurrentPost = () => {
                 avatarUrl={avatarUrl ?? ""}
                 title={title}
                 description={description}
-                name={author ?? ""}
+                name={name ?? ""}
                 likes={likesCount}
                 comments={commentsCount}
-                authorId={id.toString()}
+                authorId={authorId ?? ""}
                 id={id}
                 createdDate={createdDate}
             />
@@ -32,8 +43,8 @@ export const CurrentPost = () => {
                 <CreateComment />
             </div>
             <div className="mt-10">
-                {comments && comments.length > 0
-                    ? comments.map((comment: any) => (
+                {comments && comments.length > 0 ? (
+                    comments.map((comment: any) => (
                         <Card
                             cardFor="comment"
                             key={comment.id}
@@ -44,7 +55,9 @@ export const CurrentPost = () => {
                             id={comment.id}
                         />
                     ))
-                    : <p>Комментариев пока нет</p>}
+                ) : (
+                    <p>Комментариев пока нет</p>
+                )}
             </div>
         </>
     );

@@ -24,8 +24,8 @@ type Props = {
     authorId: number;
     title: string;
     description: string;
-    likes: any;
-    comments: any;
+    likesCount: number;
+    commentsCount: number;
     createdDate: string;
     id: number;
     cardFor: 'comment' | 'post' | 'current-post';
@@ -38,8 +38,8 @@ export const Card: React.FC<Props> = ({
     authorId,
     title,
     description,
-    likes,
-    comments,
+    likesCount,
+    commentsCount,
     createdDate,
     id,
     cardFor,
@@ -54,10 +54,6 @@ export const Card: React.FC<Props> = ({
     const [error, setError] = useState('');
     const navigate = useNavigate();
     const currentUser = useSelector(selectCurrent);
-
-    // Гарантируем, что comments и likes всегда массив
-    const likesArray = Array.isArray(likes) ? likes : likes?.$values || [];
-    const commentsArray = Array.isArray(comments) ? comments : comments?.$values || [];
 
     const refetchPosts = async () => {
         if (cardFor === 'post' || cardFor === 'current-post') {
@@ -121,17 +117,25 @@ export const Card: React.FC<Props> = ({
                 )}
             </CardHeader>
             <CardContent className="px-3 py-2 mb-5">
-                <Typography variant="body1">{title}</Typography>
-                <Typography variant="body2">{description}</Typography>
+                {/* Заголовок */}
+                <h2 className="text-2xl font-semibold text-primary">
+                    {title}
+                </h2>
+
+                {/* Описание */}
+                <p className="text-base text-primary mt-2">
+                    {description}
+                </p>
             </CardContent>
+
             {cardFor !== 'comment' && (
                 <CardActions className="gap-3">
                     <Box className="flex gap-5 items-center">
                         <Box onClick={handleClick} className="cursor-pointer">
-                            <MetaInfo count={likesArray.length} Icon={likedByUser ? FcDislike : MdOutlineFavoriteBorder} />
+                            <MetaInfo count={likesCount} Icon={likedByUser ? FcDislike : MdOutlineFavoriteBorder} />
                         </Box>
                         <Link to={`/Post/${id}`}>
-                            <MetaInfo count={commentsArray.length} Icon={FaRegComment} />
+                            <MetaInfo count={commentsCount} Icon={FaRegComment} />
                         </Link>
                     </Box>
                     <ErrorMessage error={error} />
