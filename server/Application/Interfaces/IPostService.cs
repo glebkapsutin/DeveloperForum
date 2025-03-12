@@ -1,4 +1,5 @@
-﻿using server.Core.Models;
+﻿using server.Core.DTO;
+using server.Core.Models;
 
 
 namespace server.Application.Interfaces
@@ -9,7 +10,7 @@ namespace server.Application.Interfaces
 
         public Task<Post> GetDetailsPost(int id);
 
-        public Task<Post> CreatePost(Post post);
+        public Task<PostDTO> CreatePost(Post post);
 
         public Task<Post> ModifyPost(Post post);
 

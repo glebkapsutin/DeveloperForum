@@ -71,7 +71,7 @@ namespace server.Presentation.Controllers
             
            
 
-        }
+        
         [HttpPut("{id}")]
         public async Task<ActionResult<Post>> UpdatePost(int id, [FromBody] Post post)
         {
