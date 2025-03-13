@@ -48,18 +48,17 @@ export type Post = {
     id: number;
     title: string;
     description: string;
-    author: string;
-    createdDate?: string;  
+    createdDate: string;  
     comments?: Comment[];  
     user?: User;           
     userId: number;
-    likes: Likes[];
-    authorId?: number;
-    avatarUrl?: string;
-    name?: string;
-    likesCount?: number;
-    commentsCount?: number;
-    isLikedByUser?: boolean;
+    likes?: Likes[];
+    authorId: number;
+    avatarUrl: string;
+    name: string;
+    likesCount: number;
+    commentsCount: number;
+    isLikedByUser: boolean;
 };
 
 

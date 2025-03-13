@@ -9,7 +9,7 @@ namespace server.Application.Interfaces
 
         public Task<Post> GetPostById(int id);
 
-        public Task AddPost(Post post);
+        public Task<Post> AddPost(Post post);
         
         public Task UpdatePost(Post post);
 

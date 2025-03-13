@@ -20,7 +20,9 @@ namespace server.Infrastructure.Repositories
 
         public async Task<User?> GetUserByIdAsync(int id)
         {
-            return await _dbContext.Users.FindAsync(id);
+            return await _dbContext.Users
+                .Include(u => u.Role)
+                .FirstOrDefaultAsync(u => u.Id == id);
         }
 
         public async Task AddUserAsync(User user)

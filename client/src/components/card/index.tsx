@@ -98,14 +98,14 @@ export const Card: React.FC<Props> = ({
     return (
         <MuiCard className="mb-5" sx={{ borderRadius: '12px' }}>
             <CardHeader className="flex justify-between items-center bg-transparent">
-                <Link to={`/User/${authorId}`}>
+               <Link to={`/User/${authorId}`}>
                     <User
                         name={name}
                         className="text-sm font-semibold leading-none text-default-600"
                         avatarUrl={avatarUrl}
                         description={formatToClientDate(new Date(createdDate))}
                     />
-                </Link>
+                </Link> 
                 {authorId === currentUser?.id && (
                     <Box onClick={handleDelete} className="cursor-pointer">
                         {deletePostStatus.isLoading || deleteCommentStatus.isLoading ? (

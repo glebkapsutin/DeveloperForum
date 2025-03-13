@@ -13,10 +13,17 @@ namespace server.Infrastructure.Repositories
             _context = context;
         }
 
-        public async Task AddPost(Post post)
+        public async Task<Post> AddPost(Post post)
         {
-           await _context.Posts.AddAsync(post);
-           await _context.SaveChangesAsync();   
+            await _context.Posts.AddAsync(post);
+            await _context.SaveChangesAsync();
+            
+            return await _context.Posts
+                .Include(p => p.User)
+                .Include(p => p.Comments)
+                .Include(p => p.Likes)
+                .Include(p => p.User.Role)
+                .FirstOrDefaultAsync(p => p.Id == post.Id);
         }
 
         public async Task DeletePost(int id)

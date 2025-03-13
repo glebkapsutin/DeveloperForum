@@ -43,19 +43,30 @@ namespace server.Application.Services
                 post.User = user;
                 post.CreatedDate = DateTime.UtcNow;
                 
-                await _repository.AddPost(post);
+                var createdPost = await _repository.AddPost(post);
+                if (createdPost == null)
+                {
+                    throw new KeyNotFoundException("Пост не был создан");
+                }
+
+                // Перезагружаем пост с полными данными
+                createdPost = await _repository.GetPostById(createdPost.Id);
+                if (createdPost == null)
+                {
+                    throw new KeyNotFoundException("Не удалось загрузить созданный пост");
+                }
 
                 return new PostDTO
                 {
-                    Id = post.Id,
-                    Title = post.Title,
-                    Description = post.Description,
-                    CreatedDate = post.CreatedDate,
-                    AuthorId = post.User.Id,
-                    AvatarUrl = post.User.AvatarUrl,
-                    CommentsCount = 0,
-                    LikesCount = 0,
-                    Name = post.User.UserName,
+                    Id = createdPost.Id,
+                    Title = createdPost.Title,
+                    Description = createdPost.Description,
+                    CreatedDate = createdPost.CreatedDate,
+                    AuthorId = createdPost.User.Id,
+                    avatarUrl = createdPost.User.AvatarUrl,
+                    CommentsCount = createdPost.Comments?.Count ?? 0,
+                    LikesCount = createdPost.Likes?.Count ?? 0,
+                    Name = createdPost.User.UserName,
                     IsLikedByUser = false
                 };
             }
@@ -78,7 +89,7 @@ namespace server.Application.Services
                 Description = p.Description,
                 CreatedDate = p.CreatedDate,
                 AuthorId = p.User.Id,
-                AvatarUrl = p.User.AvatarUrl,
+                avatarUrl = p.User.AvatarUrl,
                 CommentsCount = p.Comments?.Count ?? 0,
                 LikesCount = p.Likes?.Count ?? 0,
                 Name = p.User.UserName,
@@ -101,7 +112,7 @@ namespace server.Application.Services
                 Description = post.Description,
                 CreatedDate = post.CreatedDate,
                 AuthorId = post.User.Id,
-                AvatarUrl = post.User.AvatarUrl,
+                avatarUrl = post.User.AvatarUrl,
                 CommentsCount = post.Comments?.Count ?? 0,
                 LikesCount = post.Likes?.Count ?? 0,
                 Name = post.User.UserName,

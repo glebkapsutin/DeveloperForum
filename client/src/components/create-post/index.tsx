@@ -3,12 +3,14 @@ import { useCreatePostMutation, useLazyGetAllPostsQuery } from '../../app/servic
 import { Controller, useForm } from 'react-hook-form';
 import { Button, TextField } from '@mui/material';
 import { IoMdCreate } from 'react-icons/io';  
-
+import { useSelector } from 'react-redux';
+import { selectCurrent } from '../../features/user/userSlice';
 import { ErrorMessage } from '../error-message';
 
 export const CreatePost = () => {
   const [createPost] = useCreatePostMutation();
   const [triggerAllPosts] = useLazyGetAllPostsQuery();
+  const currentUser = useSelector(selectCurrent);
 
   const {
     handleSubmit,
@@ -21,13 +23,14 @@ export const CreatePost = () => {
 
   const onSubmit = handleSubmit(async (data) => {
     try {
+      if (!currentUser?.id) {
+        throw new Error('Пользователь не авторизован');
+      }
+
       await createPost({ 
         title: data.title,
         description: data.description,
-        
-        
-
-                          
+        userId: currentUser.id
       }).unwrap();
       setValue('title', '');
       setValue('description', '');
@@ -43,7 +46,6 @@ export const CreatePost = () => {
         name='title'
         control={control}
         defaultValue=''
-        
         rules={{ required: 'Обязательное поле' }}
         render={({ field }) => (
           <TextField
@@ -58,9 +60,7 @@ export const CreatePost = () => {
               sx: { borderRadius: '12px' }
             }}
           />
-          
         )}
-
       />
       <Controller
         name='description'
