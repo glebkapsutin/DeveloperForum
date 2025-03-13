@@ -6,9 +6,9 @@ namespace server.Application.Interfaces
 {
     public interface IPostService
     {
-        public Task<IEnumerable<Post>> GetAllPosts();
+        public Task<IEnumerable<PostDTO>> GetAllPosts(int currentUserId);
 
-        public Task<Post> GetDetailsPost(int id);
+        public Task<PostDTO> GetDetailsPost(int id, int currentUserId);
 
         public Task<PostDTO> CreatePost(Post post);
 

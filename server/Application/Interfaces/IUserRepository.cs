@@ -8,7 +8,7 @@ namespace server.Application.Interfaces
         Task AddUserAsync(User user);
         Task UpdateUserAsync(User user);
         Task DeleteUserAsync(User user);
-        bool UserExists(int id);
+        Task<bool> UserExists(int id);
         Task<User?> GetUserByEmailAsync(string email);
     }
 }

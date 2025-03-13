@@ -19,23 +19,28 @@ namespace server.Presentation.Controllers
             _postService = postService;
         }
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Post>>> GetPosts()
+        public async Task<ActionResult<IEnumerable<PostDTO>>> GetPosts()
         {
-           
-                var posts = await _postService.GetAllPosts();
-                return Ok(posts);
-            
-           
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out int userId))
+            {
+                return Unauthorized(new { message = "Пользователь не авторизован" });
+            }
 
+            var posts = await _postService.GetAllPosts(userId);
+            return Ok(posts);
         }
         [HttpGet("{id}")]
-        public async Task<ActionResult<Post>> GetPostById(int id)
+        public async Task<ActionResult<PostDTO>> GetPostById(int id)
         {
-           
-                var posts = await _postService.GetDetailsPost(id);
-                return Ok(posts);
-            
-           
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out int userId))
+            {
+                return Unauthorized(new { message = "Пользователь не авторизован" });
+            }
+
+            var post = await _postService.GetDetailsPost(id, userId);
+            return Ok(post);
         }
         [HttpDelete("{id}")]
 

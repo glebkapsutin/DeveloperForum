@@ -1,5 +1,4 @@
-﻿
-using server.Application.Interfaces;
+﻿using server.Application.Interfaces;
 using server.Core.Models;
 namespace server.Application.Services
 {
@@ -35,7 +34,7 @@ namespace server.Application.Services
                 throw new ArgumentException("Id doesn't match");
             }
 
-            if (!_userRepository.UserExists(id))
+            if (!await _userRepository.UserExists(id))
             {
                 throw new KeyNotFoundException("User not found");
             }
@@ -54,9 +53,9 @@ namespace server.Application.Services
             await _userRepository.DeleteUserAsync(user);
         }
 
-        public bool UserExists(int id)
+        public async Task<bool> UserExists(int id)
         {
-            return _userRepository.UserExists(id);
+            return await _userRepository.UserExists(id);
         }
     }
 }

@@ -29,7 +29,7 @@ type Props = {
     createdDate: string;
     id: number;
     cardFor: 'comment' | 'post' | 'current-post';
-    likedByUser?: boolean;
+    isLikedByUser?: boolean;
 };
 
 export const Card: React.FC<Props> = ({
@@ -43,7 +43,7 @@ export const Card: React.FC<Props> = ({
     createdDate,
     id,
     cardFor,
-    likedByUser = false,
+    isLikedByUser = false,
 }) => {
     const [likePost] = useLikePostMutation();
     const [unlikePost] = useUnlikePostMutation();
@@ -65,10 +65,10 @@ export const Card: React.FC<Props> = ({
 
     const handleClick = async () => {
         try {
-            if (likedByUser) {
-                await unlikePost(id).unwrap();
-            } else {
-                await likePost({ postId: id }).unwrap();
+            if (isLikedByUser && currentUser?.id) {
+                await unlikePost({ postId: id, userId: currentUser.id }).unwrap();
+            } else if (currentUser?.id) {
+                await likePost({ postId: id, userId: currentUser.id }).unwrap();
             }
             if (cardFor === 'current-post') {
                 await triggerGetPostById(id).unwrap();
@@ -103,7 +103,7 @@ export const Card: React.FC<Props> = ({
                         name={name}
                         className="text-sm font-semibold leading-none text-default-600"
                         avatarUrl={avatarUrl}
-                        description={formatToClientDate(createdDate)}
+                        description={formatToClientDate(new Date(createdDate))}
                     />
                 </Link>
                 {authorId === currentUser?.id && (
@@ -132,7 +132,7 @@ export const Card: React.FC<Props> = ({
                 <CardActions className="gap-3">
                     <Box className="flex gap-5 items-center">
                         <Box onClick={handleClick} className="cursor-pointer">
-                            <MetaInfo count={likesCount} Icon={likedByUser ? FcDislike : MdOutlineFavoriteBorder} />
+                            <MetaInfo count={likesCount} Icon={isLikedByUser ? FcDislike : MdOutlineFavoriteBorder} />
                         </Box>
                         <Link to={`/Post/${id}`}>
                             <MetaInfo count={commentsCount} Icon={FaRegComment} />

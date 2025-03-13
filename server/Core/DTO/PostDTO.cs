@@ -11,7 +11,6 @@ namespace server.Core.DTO
         public int CommentsCount { get; set; }
         public int LikesCount { get; set; }
         public string? Name { get; set; }
-
-        
+        public bool IsLikedByUser { get; set; }
     }
 }

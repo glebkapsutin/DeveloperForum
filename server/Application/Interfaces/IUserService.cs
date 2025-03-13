@@ -8,6 +8,6 @@ namespace server.Application.Interfaces
         Task<User> CreateUserAsync(User user);
         Task UpdateUserAsync(int id, User user);
         Task DeleteUserAsync(int id);
-        bool UserExists(int id);
+        Task<bool> UserExists(int id);
     }
 }

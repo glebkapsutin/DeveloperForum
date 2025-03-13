@@ -5,13 +5,13 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using server.Application.Interfaces;
 using server.Core.Models;
+using server.Core.DTO;
 using Microsoft.AspNetCore.Cors;
-using Microsoft.AspNetCore.Mvc;
+
 namespace server.Presentation.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-   
     public class LikesController : ControllerBase
     {
         private readonly ILikesService _likesService;
@@ -21,13 +21,12 @@ namespace server.Presentation.Controllers
             _likesService = likesService;
         }
 
-        
         [HttpPost("like")]
-        public async Task<IActionResult> LikePost([FromBody] Likes request)
+        public async Task<IActionResult> LikePost([FromBody] LikeDTO request)
         {
             try
             {
-                await _likesService.AddLike(request.UserId, request.PostId);
+                await _likesService.AddLike(request.PostId, request.UserId);
                 return Ok(new { message = "Лайк поставлен." });
             }
             catch (Exception ex)
@@ -37,13 +36,12 @@ namespace server.Presentation.Controllers
             }
         }
 
-       
         [HttpDelete("unlike")]
-        public async Task<IActionResult> UnlikePost([FromBody] Likes request)
+        public async Task<IActionResult> UnlikePost([FromQuery] int postId, [FromQuery] int userId)
         {
             try
             {
-                await _likesService.RemoteLike(request.UserId, request.PostId);
+                await _likesService.RemoteLike(postId, userId);
                 return Ok(new { message = "Лайк удалён." });
             }
             catch (Exception ex)
@@ -52,5 +50,4 @@ namespace server.Presentation.Controllers
             }
         }
     }
-
 }

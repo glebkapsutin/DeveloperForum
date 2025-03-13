@@ -1,5 +1,4 @@
-﻿
-using server.Application.Interfaces;
+﻿using server.Application.Interfaces;
 using server.Core.Models;
 using server.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
@@ -30,12 +29,22 @@ namespace server.Infrastructure.Repositories
         public async Task<Post?> GetPostById(int id)
         {
            return await _context.Posts
+                .Include(p => p.User)
+                .Include(p => p.Comments)
+                .Include(p => p.Likes)
+                .Include(p => p.User.Role)
                 .FirstOrDefaultAsync(p => p.Id == id);
         }
 
         public async Task<IEnumerable<Post>> GetPosts()
         {
-            return await _context.Posts.ToListAsync();
+            return await _context.Posts
+                .Include(p => p.User)
+                .Include(p => p.Comments)
+                .Include(p => p.Likes)
+                .Include(p => p.User.Role)
+                .OrderByDescending(p => p.CreatedDate)
+                .ToListAsync();
         }
 
         public async Task UpdatePost(Post post)

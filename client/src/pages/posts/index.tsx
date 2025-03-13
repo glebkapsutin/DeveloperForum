@@ -23,19 +23,21 @@ export const Posts = () => {
                         likesCount,
                         commentsCount,
                         createdDate,
+                        isLikedByUser
                     }) => (
                         <Card
                             key={id}
-                            avatarUrl={avatarUrl}
+                            avatarUrl={avatarUrl || ""}
                             title={title}
                             description={description}
-                            name={name ?? ""}
-                            likesCount={likesCount}
-                            commentsCount={commentsCount}
-                            authorId={authorId}
+                            name={name || ""}
+                            likesCount={likesCount || 0}
+                            commentsCount={commentsCount || 0}
+                            authorId={authorId || 0}
                             id={id}
-                            createdDate={createdDate}
+                            createdDate={createdDate || new Date().toISOString()}
                             cardFor="post"
+                            isLikedByUser={isLikedByUser || false}
                         />
                     )
                 )

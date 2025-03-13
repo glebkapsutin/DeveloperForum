@@ -4,6 +4,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration.UserSecrets;
 using server.Core.DTO;
+using Microsoft.AspNetCore.Http;
+using System.Security.Claims;
 
 namespace server.Application.Services
 {
@@ -15,7 +17,7 @@ namespace server.Application.Services
 
         private readonly ILogger<PostService> _logger;
 
-        public PostService(IPostRepository repository, ILogger<PostService> logger,IUserRepository userRepository)
+        public PostService(IPostRepository repository, ILogger<PostService> logger, IUserRepository userRepository)
         {
             _repository = repository;
             _logger = logger;
@@ -31,10 +33,17 @@ namespace server.Application.Services
 
             try
             {
-                await _repository.AddPost(post);
+                // Загружаем пользователя перед созданием поста
+                var user = await _userRepository.GetUserByIdAsync(post.UserId);
+                if (user == null)
+                {
+                    throw new KeyNotFoundException("Пользователь не найден");
+                }
 
-                // Загружаем автора поста
-                post.User = await _userRepository.GetUserByIdAsync(post.UserId);
+                post.User = user;
+                post.CreatedDate = DateTime.UtcNow;
+                
+                await _repository.AddPost(post);
 
                 return new PostDTO
                 {
@@ -42,11 +51,12 @@ namespace server.Application.Services
                     Title = post.Title,
                     Description = post.Description,
                     CreatedDate = post.CreatedDate,
-                    AuthorId = post.User?.Id,
-                    AvatarUrl = post.User?.AvatarUrl,
-                    CommentsCount = post.Comments?.Count ?? 0,
-                    LikesCount = post.Likes?.Count ?? 0,
+                    AuthorId = post.User.Id,
+                    AvatarUrl = post.User.AvatarUrl,
+                    CommentsCount = 0,
+                    LikesCount = 0,
                     Name = post.User.UserName,
+                    IsLikedByUser = false
                 };
             }
             catch (Exception ex)
@@ -57,34 +67,46 @@ namespace server.Application.Services
         }
 
 
-        public async Task<IEnumerable<Post>> GetAllPosts()
+        public async Task<IEnumerable<PostDTO>> GetAllPosts(int currentUserId)
         {
-            try { return await _repository.GetPosts(); }
-            catch (Exception ex)
+            var posts = await _repository.GetPosts();
+
+            return posts.Select(p => new PostDTO
             {
-                _logger.LogError(ex, "Error fetching all posts.");
-                throw new Exception("Error fetching all posts", ex);
-            }
+                Id = p.Id,
+                Title = p.Title,
+                Description = p.Description,
+                CreatedDate = p.CreatedDate,
+                AuthorId = p.User.Id,
+                AvatarUrl = p.User.AvatarUrl,
+                CommentsCount = p.Comments?.Count ?? 0,
+                LikesCount = p.Likes?.Count ?? 0,
+                Name = p.User.UserName,
+                IsLikedByUser = p.Likes?.Any(l => l.UserId == currentUserId) ?? false
+            });
         }
 
-
-        public async Task<Post> GetDetailsPost(int id)
+        public async Task<PostDTO> GetDetailsPost(int id, int currentUserId)
         {
             var post = await _repository.GetPostById(id);
             if (post == null)
             {
-                _logger.LogWarning($"Post with ID {id} not found.", id);
                 throw new KeyNotFoundException($"Post with ID {id} was not found.");
             }
-            CheckIdPost(id);
-           try
+
+            return new PostDTO
             {
-                return post;
-            }
-            catch (Exception ex) 
-                {
-                
-                throw new Exception($"Error Get Post {id} In Service", ex); }
+                Id = post.Id,
+                Title = post.Title,
+                Description = post.Description,
+                CreatedDate = post.CreatedDate,
+                AuthorId = post.User.Id,
+                AvatarUrl = post.User.AvatarUrl,
+                CommentsCount = post.Comments?.Count ?? 0,
+                LikesCount = post.Likes?.Count ?? 0,
+                Name = post.User.UserName,
+                IsLikedByUser = post.Likes?.Any(l => l.UserId == currentUserId) ?? false
+            };
         }
 
         public async Task<Post> ModifyPost(Post post)

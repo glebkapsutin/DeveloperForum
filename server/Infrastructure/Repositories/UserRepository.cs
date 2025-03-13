@@ -41,9 +41,9 @@ namespace server.Infrastructure.Repositories
             await _dbContext.SaveChangesAsync();
         }
 
-        public bool UserExists(int id)
+        public async Task<bool> UserExists(int id)
         {
-            return _dbContext.Users.Any(x => x.Id == id);
+            return await _dbContext.Users.AnyAsync(x => x.Id == id);
         }
 
         public async Task<User?> GetUserByEmailAsync(string email)

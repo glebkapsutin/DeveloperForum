@@ -1,6 +1,5 @@
-
 /**
- * ���� � DTO, ��������������� ������� �������.
+ *  DTO,  ������� �������.
  */
 
 import { Avatar } from "@mui/material";
@@ -55,6 +54,12 @@ export type Post = {
     user?: User;           
     userId: number;
     likes: Likes[];
+    authorId?: number;
+    avatarUrl?: string;
+    name?: string;
+    likesCount?: number;
+    commentsCount?: number;
+    isLikedByUser?: boolean;
 };
 
 

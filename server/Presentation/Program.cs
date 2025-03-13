@@ -78,6 +78,7 @@ builder.Services.AddScoped<IFollowsService, FollowsService>();
 builder.Services.AddScoped<IFollowsRepository, FollowsRepository>();
 builder.Services.AddScoped<ILikesService, LikesService>();
 builder.Services.AddScoped<ILikesRepository, LikesRepository>();
+builder.Services.AddHttpContextAccessor();
 var app = builder.Build();
 
 DataBaseInitializer.ApplyMigrations(app.Services); 
