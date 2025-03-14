@@ -97,25 +97,25 @@ export const Card: React.FC<Props> = ({
 
     return (
         <MuiCard className="mb-5" sx={{ borderRadius: '12px' }}>
-            <CardHeader className="flex justify-between items-center bg-transparent">
-               <Link to={`/User/${authorId}`}>
+            <div className="flex justify-between items-center">
+                <Link to={`/User/${authorId}`}>
                     <User
                         name={name}
                         className="text-sm font-semibold leading-none text-default-600"
                         avatarUrl={avatarUrl}
                         description={formatToClientDate(new Date(createdDate))}
                     />
-                </Link> 
+                </Link>
                 {authorId === currentUser?.id && (
-                    <Box onClick={handleDelete} className="cursor-pointer">
+                    <div onClick={handleDelete} className="cursor-pointer">
                         {deletePostStatus.isLoading || deleteCommentStatus.isLoading ? (
-                            <CircularProgress size={20} />
+                            <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-gray-900" />
                         ) : (
                             <RiDeleteBinLine />
                         )}
-                    </Box>
+                    </div>
                 )}
-            </CardHeader>
+            </div>
             <CardContent className="px-3 py-2 mb-5">
                 {/* Заголовок */}
                 <h2 className="text-2xl font-semibold text-primary">

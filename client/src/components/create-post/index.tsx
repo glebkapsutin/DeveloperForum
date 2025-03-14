@@ -30,7 +30,13 @@ export const CreatePost = () => {
       await createPost({ 
         title: data.title,
         description: data.description,
-        userId: currentUser.id
+        userId: currentUser.id,
+        authorId: currentUser.id,
+        avatarUrl: currentUser.avatar,
+        name: currentUser.userName,
+        likesCount: 0,
+        commentsCount: 0,
+        isLikedByUser: false
       }).unwrap();
       setValue('title', '');
       setValue('description', '');
