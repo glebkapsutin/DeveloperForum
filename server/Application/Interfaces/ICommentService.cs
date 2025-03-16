@@ -1,18 +1,19 @@
 ﻿using server.Core.Models;
+using server.Core.DTO;
 
 namespace server.Application.Interfaces
 {
     public interface ICommentService
     {
-        public Task<IEnumerable<Comment>> GetAllComments();
+        public Task<IEnumerable<CommentDTO>> GetAllComments();
 
-        public Task<Comment> GetDetailsComment(int id);
+        public Task<CommentDTO> GetDetailsComment(int id);
 
-        public Task<Comment> CreateComment(Comment comment);
+        public Task<CommentDTO> CreateComment(Comment comment);
 
-        public Task<Comment> ModifyComment(Comment comment);
+        public Task<CommentDTO> ModifyComment(Comment comment);
 
-        public Task<Comment> RemoveComment(int id);
+        public Task<CommentDTO> RemoveComment(int id);
 
     }
 }

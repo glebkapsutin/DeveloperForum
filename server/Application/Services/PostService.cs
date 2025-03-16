@@ -67,7 +67,24 @@ namespace server.Application.Services
                     CommentsCount = createdPost.Comments?.Count ?? 0,
                     LikesCount = createdPost.Likes?.Count ?? 0,
                     Name = createdPost.User.UserName,
-                    IsLikedByUser = false
+                    IsLikedByUser = false,
+                    Comments = createdPost.Comments?.Select(c => new CommentDTO
+                    {
+                        Id = c.Id,
+                        Description = c.Description,
+                        UserId = c.UserId,
+                        User = c.User != null ? new UserDto
+                        {
+                            Id = c.User.Id,
+                            Username = c.User.UserName,
+                            Email = c.User.Email,
+                            role = c.User.Role,
+                            AvatarUrl = c.User.AvatarUrl
+                        } : null,
+                        CreatedDate = c.CreatedDate,
+                        PostId = c.PostId,
+                        AvatarUrl = c.User?.AvatarUrl
+                    }).ToList()
                 };
             }
             catch (Exception ex)
@@ -93,7 +110,23 @@ namespace server.Application.Services
                 CommentsCount = p.Comments?.Count ?? 0,
                 LikesCount = p.Likes?.Count ?? 0,
                 Name = p.User.UserName,
-                IsLikedByUser = p.Likes?.Any(l => l.UserId == currentUserId) ?? false
+                IsLikedByUser = p.Likes?.Any(l => l.UserId == currentUserId) ?? false,
+                Comments = p.Comments?.Select(c => new CommentDTO
+                {
+                    Id = c.Id,
+                    Description = c.Description,
+                    UserId = c.UserId,
+                    User = c.User != null ? new UserDto
+                    {
+                        Id = c.User.Id,
+                        Username = c.User.UserName,
+                        Email = c.User.Email,
+                        role = c.User.Role,
+                        AvatarUrl = c.User.AvatarUrl
+                    } : null,
+                    CreatedDate = c.CreatedDate,
+                    PostId = c.PostId
+                }).ToList()
             });
         }
 
@@ -116,7 +149,23 @@ namespace server.Application.Services
                 CommentsCount = post.Comments?.Count ?? 0,
                 LikesCount = post.Likes?.Count ?? 0,
                 Name = post.User.UserName,
-                IsLikedByUser = post.Likes?.Any(l => l.UserId == currentUserId) ?? false
+                IsLikedByUser = post.Likes?.Any(l => l.UserId == currentUserId) ?? false,
+                Comments = post.Comments?.Select(c => new CommentDTO
+                {
+                    Id = c.Id,
+                    Description = c.Description,
+                    UserId = c.UserId,
+                    User = c.User != null ? new UserDto
+                    {
+                        Id = c.User.Id,
+                        Username = c.User.UserName,
+                        Email = c.User.Email,
+                        role = c.User.Role,
+                        AvatarUrl = c.User.AvatarUrl
+                    } : null,
+                    CreatedDate = c.CreatedDate,
+                    PostId = c.PostId
+                }).ToList()
             };
         }
 

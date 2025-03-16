@@ -5,7 +5,7 @@
 namespace DevelopForum.Migrations
 {
     /// <inheritdoc />
-    public partial class AddCreatedDateqw : Migration
+    public partial class fics : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

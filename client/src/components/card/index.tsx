@@ -17,6 +17,8 @@ import { MetaInfo } from '../meta-info';
 import { FcDislike } from 'react-icons/fc';
 import { MdOutlineFavoriteBorder } from 'react-icons/md';
 import { FaRegComment } from 'react-icons/fa';
+import { useTheme } from "@mui/material/styles";
+import { Comment } from '../../app/types';
 
 type Props = {
     avatarUrl: string;
@@ -30,6 +32,7 @@ type Props = {
     id: number;
     cardFor: 'comment' | 'post' | 'current-post';
     isLikedByUser?: boolean;
+    comments?: Comment[];
 };
 
 export const Card: React.FC<Props> = ({
@@ -44,6 +47,7 @@ export const Card: React.FC<Props> = ({
     id,
     cardFor,
     isLikedByUser = false,
+    comments,
 }) => {
     const [likePost] = useLikePostMutation();
     const [unlikePost] = useUnlikePostMutation();
@@ -54,6 +58,7 @@ export const Card: React.FC<Props> = ({
     const [error, setError] = useState('');
     const navigate = useNavigate();
     const currentUser = useSelector(selectCurrent);
+    const theme = useTheme();
 
     const refetchPosts = async () => {
         if (cardFor === 'post' || cardFor === 'current-post') {
@@ -96,9 +101,9 @@ export const Card: React.FC<Props> = ({
     };
 
     return (
-        <MuiCard className="mb-5" sx={{ borderRadius: '12px' }}>
+        <MuiCard className="mb-5 relative"  sx={{ borderRadius: '12px' }}>
             <div className="flex justify-between items-center">
-                <Link to={`/User/${authorId}`}>
+                <Link to={`/User/${authorId}`} className="no-underline text-inherit hover:text-inherit">
                     <User
                         name={name}
                         className="text-sm font-semibold leading-none text-default-600"
@@ -107,11 +112,11 @@ export const Card: React.FC<Props> = ({
                     />
                 </Link>
                 {authorId === currentUser?.id && (
-                    <div onClick={handleDelete} className="cursor-pointer">
+                    <div onClick={handleDelete} className="cursor-pointer absolute top-2 right-1">
                         {deletePostStatus.isLoading || deleteCommentStatus.isLoading ? (
                             <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-gray-900" />
                         ) : (
-                            <RiDeleteBinLine />
+                            <RiDeleteBinLine className="text-red-500" />
                         )}
                     </div>
                 )}
@@ -134,9 +139,15 @@ export const Card: React.FC<Props> = ({
                         <Box onClick={handleClick} className="cursor-pointer">
                             <MetaInfo count={likesCount} Icon={isLikedByUser ? FcDislike : MdOutlineFavoriteBorder} />
                         </Box>
-                        <Link to={`/Post/${id}`}>
-                            <MetaInfo count={commentsCount} Icon={FaRegComment} />
-                        </Link>
+                        <Box>
+                            <Link to={`/Post/${id}`}>
+                                <MetaInfo 
+                                    count={commentsCount} 
+                                    Icon={FaRegComment} 
+                                    iconStyle={{ color: theme.palette.text.primary }}
+                                />
+                            </Link>
+                        </Box>
                     </Box>
                     <ErrorMessage error={error} />
                 </CardActions>

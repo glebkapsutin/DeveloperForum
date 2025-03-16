@@ -35,9 +35,10 @@ namespace server.Infrastructure.Repositories
 
         public async Task<Post?> GetPostById(int id)
         {
-           return await _context.Posts
+            return await _context.Posts
                 .Include(p => p.User)
                 .Include(p => p.Comments)
+                    .ThenInclude(c => c.User)
                 .Include(p => p.Likes)
                 .Include(p => p.User.Role)
                 .FirstOrDefaultAsync(p => p.Id == id);

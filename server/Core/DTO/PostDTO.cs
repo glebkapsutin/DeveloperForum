@@ -1,3 +1,5 @@
+using server.Core.Models;
+
 namespace server.Core.DTO
 {
     public class PostDTO
@@ -12,5 +14,7 @@ namespace server.Core.DTO
         public int LikesCount { get; set; }
         public string? Name { get; set; }
         public bool IsLikedByUser { get; set; }
+
+        public ICollection<CommentDTO>? Comments { get; set; }
     }
 }

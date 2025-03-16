@@ -1,4 +1,5 @@
-﻿using server.Core.Models;
+﻿using server.Core.DTO;
+using server.Core.Models;
 namespace server.Application.Interfaces
 {
     public interface IUserService
@@ -9,5 +10,7 @@ namespace server.Application.Interfaces
         Task UpdateUserAsync(int id, User user);
         Task DeleteUserAsync(int id);
         Task<bool> UserExists(int id);
+        Task<UserDto?> GetUserDtoByIdAsync(int id);
+        
     }
 }

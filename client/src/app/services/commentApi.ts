@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/consistent-type-imports */
-import { Comment } from "../types";
+import { CommentDto } from "../types";
 import { api } from "./api";
 
 export const commentApi = api.injectEndpoints({
     endpoints: (builder) => ({
         
-        createComment: builder.mutation<Comment, Omit<Comment, "id" | "createdDate">>({
+        createComment: builder.mutation<CommentDto, Omit<CommentDto, "id" >>({
             query: (commentData) => ({
                 url: "/Comment",
                 method: "POST",
@@ -14,7 +14,7 @@ export const commentApi = api.injectEndpoints({
         }),
 
         
-        getAllComments: builder.query<Comment[], void>({
+        getAllComments: builder.query<CommentDto[], void>({
             query: () => ({
                 url: "/Comment",
                 method: "GET",
@@ -22,7 +22,7 @@ export const commentApi = api.injectEndpoints({
         }),
 
        
-        getCommentById: builder.query<Comment, number>({
+        getCommentById: builder.query<CommentDto, number>({
             query: (commentId) => ({
                 url: `/Comment/${commentId}`,
                 method: "GET",
@@ -37,7 +37,7 @@ export const commentApi = api.injectEndpoints({
             }),
         }),
 
-        updateComment: builder.mutation<Comment, { id: number; data: Pick<Comment, "description"> }>({
+        updateComment: builder.mutation<CommentDto, { id: number; data: Pick<CommentDto, "description"> }>({
             query: ({ id, data }) => ({
                 url: `/Comment/${id}`,
                 method: "PUT",

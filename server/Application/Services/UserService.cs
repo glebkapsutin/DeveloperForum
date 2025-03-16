@@ -1,4 +1,6 @@
 ﻿using server.Application.Interfaces;
+using server.Core.DTO;
+using System.Linq;
 using server.Core.Models;
 namespace server.Application.Services
 {
@@ -19,6 +21,18 @@ namespace server.Application.Services
         public async Task<User?> GetUserByIdAsync(int id)
         {
             return await _userRepository.GetUserByIdAsync(id);
+        }
+        public async Task<UserDto?> GetUserDtoByIdAsync(int id)
+        {
+            var users = await _userRepository.GetUserByIdAsync(id);
+            return new UserDto{
+                Id = users.Id,
+                Username = users.UserName,
+                Email = users.Email,
+                role = users.Role,
+                AvatarUrl = users.AvatarUrl
+            };
+            
         }
 
         public async Task<User> CreateUserAsync(User user)

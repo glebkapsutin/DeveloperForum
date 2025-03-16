@@ -5,65 +5,73 @@ import { Button, TextField } from '@mui/material';
 import { IoMdCreate } from 'react-icons/io';
 import { useParams } from 'react-router-dom';
 import { useCreateCommentMutation } from '../../app/services/commentApi';
+import { useSelector } from 'react-redux';
+import { selectCurrent } from '../../features/user/userSlice';
 
-export const CreateComment = () => {
-  const { id } = useParams<{ id: string }>();
-  const [createComment] = useCreateCommentMutation();
-  const [getPostById] = useLazyGetPostByIdQuery();
+type Props = {
+    postId?: number;
+};
 
-  const {
-    handleSubmit,
-    control,
-    formState: { errors },
-    setValue
-  } = useForm();
+export const CreateComment: React.FC<Props> = ({ postId }) => {
+    const { id } = useParams();
+    const [createComment] = useCreateCommentMutation();
+    const [getPostById] = useLazyGetPostByIdQuery();
+    const currentUser = useSelector(selectCurrent);
 
-  const onSubmit = handleSubmit(async (data) => {
-    try {
-      if (id) {
-        await createComment({ description: data.comment, postId: id }).unwrap();
-        setValue('comment', '');
-        await getPostById(id).unwrap();
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  });
+    const {
+        handleSubmit,
+        control,
+        formState: { errors },
+        setValue
+    } = useForm();
 
-  return (
-    <form className="flex-grow" onSubmit={onSubmit}>
-      <Controller
-        name="comment"
-        control={control}
-        defaultValue=""
-        rules={{
-          required: 'Обязательное поле'
-        }}
-        render={({ field }) => (
-          <TextField
-            {...field}
-            label="Напишите свой комментарий"
-            variant="outlined"
-            fullWidth
-            error={!!errors.comment}
-            helperText={errors.comment?.message}
-            className="mb-5"
-          />
-        )}
-      />
+    const onSubmit = handleSubmit(async (data) => {
+        try {
+            const targetPostId = postId || (id ? parseInt(id) : null);
+            if (targetPostId && currentUser) {
+                const commentData = {
+                    description: data.comment,
+                    userId: currentUser.id,
+                    postId: targetPostId,
+                    createdDate: new Date().toISOString()
+                };
+                console.log('Comment Data:', commentData);
+                await createComment(commentData).unwrap();
+                setValue('comment', '');
+                await getPostById(targetPostId).unwrap();
+            }
+        } catch (error) {
+            console.log('Error creating comment:', error);
+        }
+    });
 
-      <Button
-        variant="contained"
-        color="primary"
-        endIcon={<IoMdCreate />}
-        type="submit"
-        className="mt-4"
-        InputProps={{
-              sx: { borderRadius: '12px' }
-        }}
-      >
-        Ответить
-      </Button>
-    </form>
-  );
+    return (
+        <form onSubmit={onSubmit} className="flex flex-col gap-4 mb-4">
+            <Controller
+                name="comment"
+                control={control}
+                defaultValue=""
+                rules={{ required: 'Комментарий обязателен' }}
+                render={({ field }) => (
+                    <TextField
+                        {...field}
+                        label="Добавить комментарий"
+                        multiline
+                        rows={4}
+                        error={!!errors.comment}
+                        helperText={errors.comment?.message?.toString()}
+                    />
+                )}
+            />
+            <Button
+                type="submit"
+                variant="contained"
+                color="primary"
+                endIcon={<IoMdCreate />}
+                className="mt-4"
+            >
+                Ответить
+            </Button>
+        </form>
+    );
 };

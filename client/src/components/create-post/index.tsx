@@ -32,8 +32,8 @@ export const CreatePost = () => {
         description: data.description,
         userId: currentUser.id,
         authorId: currentUser.id,
-        avatarUrl: currentUser.avatar,
-        name: currentUser.userName,
+        avatarUrl: currentUser.AvatarUrl,
+        name: currentUser.Username,
         likesCount: 0,
         commentsCount: 0,
         isLikedByUser: false

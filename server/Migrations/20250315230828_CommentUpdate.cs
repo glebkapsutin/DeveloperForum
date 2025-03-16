@@ -5,7 +5,7 @@
 namespace DevelopForum.Migrations
 {
     /// <inheritdoc />
-    public partial class LikesNewC : Migration
+    public partial class CommentUpdate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

@@ -3,12 +3,13 @@ import { useParams } from 'react-router-dom';
 import { useGetPostByIdQuery } from '../../app/services/postApi';
 import { Card } from '../../components/card';
 import { CreateComment } from '../../components/create-comment';
+import { Post, CommentDto } from '../../app/types';
 
 export const CurrentPost = () => {
     const params = useParams<{ id: string }>();
-    const { data } = useGetPostByIdQuery(Number(params?.id) ?? 0);
+    const { data: post } = useGetPostByIdQuery(Number(params?.id) ?? 0);
 
-    if (!data) {
+    if (!post) {
         return <h2>Пост не найден</h2>;
     }
 
@@ -22,48 +23,53 @@ export const CurrentPost = () => {
         name,
         likesCount,
         commentsCount,
-        comments,
+        comments = [], // Устанавливаем значение по умолчанию пустой массив
         isLikedByUser
-    } = data;
+    } = post as Post;
+
+    const hasComments = Array.isArray(comments) && comments.length > 0;
+
+    console.log('Comments:', comments);
+    console.log('First comment user:', comments[0]?.user);
 
     return (
         <>
             <Card
                 cardFor="current-post"
-                avatarUrl={avatarUrl || ""}
+                avatarUrl={avatarUrl}
                 title={title}
                 description={description}
-                name={name || ""}
-                likesCount={likesCount || 0}
-                commentsCount={commentsCount || 0}
-                authorId={authorId || 0}
+                name={name}
+                likesCount={likesCount}
+                commentsCount={commentsCount}
+                authorId={authorId}
                 id={id}
-                createdDate={createdDate || new Date().toISOString()}
-                isLikedByUser={isLikedByUser || false}
+                createdDate={createdDate}
+                isLikedByUser={isLikedByUser}
             />
             <div className="mt-10">
-                <CreateComment />
+                <CreateComment postId={id} />
             </div>
             <div className="mt-10">
-                {comments && comments.length > 0 ? (
-                    comments.map((comment: any) => (
+                {hasComments ? (
+                    comments.map((comment: CommentDto) => (
                         <Card
                             cardFor="comment"
                             key={comment.id}
-                            avatarUrl={comment.avatarUrl || ""}
-                            title={comment.author || ""}
+                            avatarUrl={comment.user?.avatarUrl || ""}
+                            title=""
                             description={comment.description}
-                            authorId={Number(comment.userId)}
+                            authorId={comment.userId}
                             id={comment.id}
-                            name={comment.author || ""}
+                            name={comment.user?.username || "Пользователь"}
                             likesCount={0}
                             commentsCount={0}
-                            createdDate={comment.createdDate || new Date().toISOString()}
+                            createdDate={comment.createdDate}
                             isLikedByUser={false}
                         />
                     ))
                 ) : (
-                    <p>Комментариев пока нет</p>
+                    <p className="text-center text-gray-500">Комментариев пока нет</p>
                 )}
             </div>
         </>

@@ -12,8 +12,8 @@ using server.Infrastructure.Data;
 namespace DevelopForum.Migrations
 {
     [DbContext(typeof(DevelopForumDbContext))]
-    [Migration("20250310114204_AddCreatedDateAuto")]
-    partial class AddCreatedDateAuto
+    [Migration("20250315223825_CommentCheck")]
+    partial class CommentCheck
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -54,10 +54,6 @@ namespace DevelopForum.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Author")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("timestamp with time zone");
 
@@ -68,9 +64,14 @@ namespace DevelopForum.Migrations
                     b.Property<int>("PostId")
                         .HasColumnType("integer");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
 
                     b.HasIndex("PostId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Comments");
                 });
@@ -133,6 +134,7 @@ namespace DevelopForum.Migrations
                         .HasColumnType("integer");
 
                     b.Property<DateTime?>("CreatedDate")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Description")
@@ -210,13 +212,19 @@ namespace DevelopForum.Migrations
 
             modelBuilder.Entity("server.Core.Models.Comment", b =>
                 {
-                    b.HasOne("server.Core.Models.Post", "Post")
+                    b.HasOne("server.Core.Models.Post", null)
                         .WithMany("Comments")
                         .HasForeignKey("PostId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Post");
+                    b.HasOne("server.Core.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("server.Core.Models.Follows", b =>
@@ -241,7 +249,7 @@ namespace DevelopForum.Migrations
             modelBuilder.Entity("server.Core.Models.Likes", b =>
                 {
                     b.HasOne("server.Core.Models.Post", "Post")
-                        .WithMany()
+                        .WithMany("Likes")
                         .HasForeignKey("PostId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -291,6 +299,8 @@ namespace DevelopForum.Migrations
             modelBuilder.Entity("server.Core.Models.Post", b =>
                 {
                     b.Navigation("Comments");
+
+                    b.Navigation("Likes");
                 });
 
             modelBuilder.Entity("server.Core.Models.User", b =>

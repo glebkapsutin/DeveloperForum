@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using server.Application.Interfaces;
+using server.Core.DTO;
 using server.Core.Models;
 using server.Infrastructure.Data;
 namespace server.Infrastructure.Repositories
@@ -25,6 +26,7 @@ namespace server.Infrastructure.Repositories
                 .FirstOrDefaultAsync(u => u.Id == id);
         }
 
+        
         public async Task AddUserAsync(User user)
         {
             await _dbContext.Users.AddAsync(user);

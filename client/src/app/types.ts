@@ -9,8 +9,8 @@ export type RoleType = "Admin" | "User";
 
 
 export type Role = {
-    id: number;
-    typeOfRole: RoleType;
+    Id: number;
+    TypeOfRole: RoleType;
 };
 export type Likes = {
     id: number;
@@ -49,7 +49,7 @@ export type Post = {
     title: string;
     description: string;
     createdDate: string;  
-    comments?: Comment[];  
+    comments?: CommentDto[];  
     user?: User;           
     userId: number;
     likes?: Likes[];
@@ -64,11 +64,11 @@ export type Post = {
 
 export type Comment = {
     id: number;
-    post: Post;
-    postId: number;
     description: string;
-    author: string;
-    createdDate: string;  
+    userId: number;
+    user?: UserDto;
+    createdDate: string;
+    postId: number;
 };
 
 
@@ -105,11 +105,10 @@ export type LoginRequest = {
 
 export type UserDto = {
     id: number;
-    userName: string;
+    username: string;
     email: string;
-    registeredAt: string;
     role: Role;
-    avatar: string;
+    avatarUrl: string;
 };
 
 
@@ -118,4 +117,13 @@ export type AuthResult = {
     message: string;
     token: string;    
     user: UserDto;
+};
+
+export type CommentDto = {
+    id: number;
+    description: string;
+    userId: number;
+    user?: UserDto;
+    createdDate: string;
+    postId: number;
 };

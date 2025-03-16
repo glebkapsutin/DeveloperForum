@@ -23,7 +23,8 @@ export const Posts = () => {
                         likesCount,
                         commentsCount,
                         createdDate,
-                        isLikedByUser
+                        isLikedByUser,
+                        
                     }) => (
                         <Card
                             key={id}
@@ -38,6 +39,7 @@ export const Posts = () => {
                             createdDate={createdDate}
                             cardFor="post"
                             isLikedByUser={isLikedByUser}
+                            
                         />
                     )
                 )
