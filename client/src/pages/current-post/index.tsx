@@ -4,6 +4,7 @@ import { useGetPostByIdQuery } from '../../app/services/postApi';
 import { Card } from '../../components/card';
 import { CreateComment } from '../../components/create-comment';
 import { Post, CommentDto } from '../../app/types';
+import { GoBack } from '../../components/go-back';
 
 export const CurrentPost = () => {
     const params = useParams<{ id: string }>();
@@ -33,7 +34,8 @@ export const CurrentPost = () => {
     console.log('First comment user:', comments[0]?.user);
 
     return (
-        <>
+        <> 
+             <GoBack />
             <Card
                 cardFor="current-post"
                 avatarUrl={avatarUrl}
@@ -66,6 +68,7 @@ export const CurrentPost = () => {
                             commentsCount={0}
                             createdDate={comment.createdDate}
                             isLikedByUser={false}
+                            postId={id}
                         />
                     ))
                 ) : (

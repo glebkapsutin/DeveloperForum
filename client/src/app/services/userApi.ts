@@ -80,7 +80,9 @@ export const {
     useGetUserByIdQuery,
     useDeleteUserMutation,
     useUpdateUserMutation,
-    useCurrentQuery
+    useLazyGetUserByIdQuery,
+    useCurrentQuery,
+    useLazyCurrentQuery
 } = userApi;
 export const {
     endpoints: { login, registerUser, current, getUserById, updateUser,getUsers,createUser}

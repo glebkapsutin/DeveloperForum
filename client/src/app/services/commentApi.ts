@@ -30,7 +30,7 @@ export const commentApi = api.injectEndpoints({
         }),
 
         
-        deleteComment: builder.mutation<void, number>({
+        deleteComment: builder.mutation<CommentDto, number>({
             query: (commentId) => ({
                 url: `/Comment/${commentId}`,
                 method: "DELETE",

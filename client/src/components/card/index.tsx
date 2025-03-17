@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useLikePostMutation, useUnlikePostMutation } from '../../app/services/likesApi';
-import { useDeletePostMutation, useLazyGetAllPostsQuery, useLazyGetPostByIdQuery } from '../../app/services/postApi';
+import { getPostById, useDeletePostMutation, useLazyGetAllPostsQuery, useLazyGetPostByIdQuery } from '../../app/services/postApi';
 import { useDeleteCommentMutation } from '../../app/services/commentApi';
 import { useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
@@ -33,6 +33,7 @@ type Props = {
     cardFor: 'comment' | 'post' | 'current-post';
     isLikedByUser?: boolean;
     comments?: Comment[];
+    postId?: number;
 };
 
 export const Card: React.FC<Props> = ({
@@ -48,6 +49,7 @@ export const Card: React.FC<Props> = ({
     cardFor,
     isLikedByUser = false,
     comments,
+    postId,
 }) => {
     const [likePost] = useLikePostMutation();
     const [unlikePost] = useUnlikePostMutation();
@@ -91,9 +93,9 @@ export const Card: React.FC<Props> = ({
                 await deletePost(id).unwrap();
                 await refetchPosts();
                 if (cardFor === 'current-post') navigate('/');
-            } else if (cardFor === 'comment') {
+            } else if (cardFor === 'comment' && postId) {
                 await deleteComment(id).unwrap();
-                await refetchPosts();
+                await triggerGetPostById(postId).unwrap();
             }
         } catch (err) {
             setError(hasErrorField(err) ? err.data.error : String(err));
@@ -122,12 +124,12 @@ export const Card: React.FC<Props> = ({
                 )}
             </div>
             <CardContent className="px-3 py-2 mb-5">
-                {/* Заголовок */}
+               
                 <h2 className="text-2xl font-semibold text-primary">
                     {title}
                 </h2>
 
-                {/* Описание */}
+               
                 <p className="text-base text-primary mt-2">
                     {description}
                 </p>
@@ -140,7 +142,7 @@ export const Card: React.FC<Props> = ({
                             <MetaInfo count={likesCount} Icon={isLikedByUser ? FcDislike : MdOutlineFavoriteBorder} />
                         </Box>
                         <Box>
-                            <Link to={`/Post/${id}`}>
+                            <Link to={`/Post/${id}`} className="no-underline">
                                 <MetaInfo 
                                     count={commentsCount} 
                                     Icon={FaRegComment} 

@@ -60,15 +60,21 @@ export const CreateComment: React.FC<Props> = ({ postId }) => {
                         rows={4}
                         error={!!errors.comment}
                         helperText={errors.comment?.message?.toString()}
+                        InputProps={{
+                            sx: { borderRadius: '12px' }
+                          }}
                     />
                 )}
             />
             <Button
                 type="submit"
                 variant="contained"
-                color="primary"
+                className="self-end bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg flex items-center gap-2"
+                color=''
+                
+                sx={{borderRadius: "12px"}}
                 endIcon={<IoMdCreate />}
-                className="mt-4"
+                
             >
                 Ответить
             </Button>
