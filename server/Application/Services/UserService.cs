@@ -24,19 +24,8 @@ namespace server.Application.Services
         }
         public async Task<UserDto?> GetUserDtoByIdAsync(int id)
         {
-            var users = await _userRepository.GetUserByIdAsync(id);
-            return new UserDto{
-                Id = users.Id,
-                Username = users.UserName,
-                Email = users.Email,
-                role = users.Role,
-                AvatarUrl = users.AvatarUrl,
-                Bio = users.Bio,
-                Location = users.Location,
-                DataOfBirth = users.DataOfBirth,
-                Followers = users.Followers,
-                Followings = users.Followings
-            };
+            var users = await _userRepository.GetUserDtoByIdAsync(id);
+           return users;
             
         }
 

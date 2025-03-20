@@ -37,7 +37,8 @@ export const UserProfile = () => {
                         await unfollowUser({followerId:currentUser.id, followingId:userId}).unwrap()
                     }
                 else{ await followUser({followerId:currentUser.id, followingId:userId}).unwrap()}
-                triggerGetUserByIdQuery(userId);
+                await triggerGetUserByIdQuery(userId);
+                await triggerCurrentQuery();
             }
             
         } catch (error) {

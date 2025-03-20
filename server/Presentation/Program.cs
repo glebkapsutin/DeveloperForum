@@ -17,6 +17,11 @@ var connectionString = isDocker
     ? builder.Configuration.GetConnectionString("DockerConnection")
     : builder.Configuration.GetConnectionString("DefaultConnection");
 
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
+    });
 
 builder.Services.AddDbContext<DevelopForumDbContext>(options =>
     options.UseNpgsql(connectionString));
@@ -100,6 +105,7 @@ app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.UseCors("AllowAll");
 app.UseAuthentication();
+app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers(); 

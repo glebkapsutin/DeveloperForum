@@ -11,6 +11,8 @@ namespace server.Application.Interfaces
         Task DeleteUserAsync(User user);
         Task<bool> UserExists(int id);
         Task<User?> GetUserByEmailAsync(string email);
+
+        Task<UserDto?> GetUserDtoByIdAsync(int id);
         
     }
 }
