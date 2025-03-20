@@ -30,7 +30,12 @@ namespace server.Application.Services
                 Username = users.UserName,
                 Email = users.Email,
                 role = users.Role,
-                AvatarUrl = users.AvatarUrl
+                AvatarUrl = users.AvatarUrl,
+                Bio = users.Bio,
+                Location = users.Location,
+                DataOfBirth = users.DataOfBirth,
+                Followers = users.Followers,
+                Followings = users.Followings
             };
             
         }

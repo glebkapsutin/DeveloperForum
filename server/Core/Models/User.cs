@@ -15,7 +15,11 @@
 
         public ICollection<Post>? Posts { get; set; } = new List<Post>();
 
-        
+        public string? Bio { get; set; }
+
+        public string? Location { get; set; }
+
+        public DateTime? DataOfBirth { get; set; }
        
         public Role Role { get; set; }
 

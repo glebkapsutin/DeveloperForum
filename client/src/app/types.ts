@@ -40,6 +40,8 @@ export type User = {
     roleId: number;
     followers: Follows[];
     followings: Follows[];
+    bio?: string;
+    location?: string;
 
 };
 
@@ -109,6 +111,11 @@ export type UserDto = {
     email: string;
     role: Role;
     avatarUrl: string;
+    bio?: string;
+    location?: string;
+    followers: Follows[];
+    followings: Follows[];
+    dataOfBirth?: Date;
 };
 
 
@@ -124,6 +131,6 @@ export type CommentDto = {
     description: string;
     userId: number;
     user?: UserDto;
-    createdDate: string;
+    createdDate: Date;
     postId: number;
 };

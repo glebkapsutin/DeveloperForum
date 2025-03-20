@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using server.Infrastructure.Data;
@@ -11,9 +12,11 @@ using server.Infrastructure.Data;
 namespace DevelopForum.Migrations
 {
     [DbContext(typeof(DevelopForumDbContext))]
-    partial class DevelopForumDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250319164031_newBioAndLocInUSer")]
+    partial class newBioAndLocInUSer
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -184,9 +187,6 @@ namespace DevelopForum.Migrations
 
                     b.Property<string>("Bio")
                         .HasColumnType("text");
-
-                    b.Property<DateTime?>("DataOfBirth")
-                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Email")
                         .IsRequired()
