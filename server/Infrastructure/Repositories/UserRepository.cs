@@ -23,36 +23,11 @@ namespace server.Infrastructure.Repositories
         {
             return await _dbContext.Users
                 .Include(u => u.Role)
-                .Include(u=>u.Followings)
-                .Include(u=>u.Followers)
+                .Include(u => u.Followers)
+                .Include(u => u.Followings)
                 .Include(u => u.Posts)
+                
                 .FirstOrDefaultAsync(u => u.Id == id);
-        }
-        public async Task<UserDto?> GetUserDtoByIdAsync(int id)
-        {
-                var user = await _dbContext.Users
-                    .Include(u => u.Role)
-                    .Include(u => u.Posts)
-                    .Include(u => u.Followers)
-                    .Include(u => u.Followings)
-                    .FirstOrDefaultAsync(u => u.Id == id);
-
-            if (user == null)
-            {
-                return null;
-            }
-
-            return new UserDto
-            {
-                Id = user.Id,
-                Username = user.UserName,
-                Email = user.Email,
-                role = user.Role!,
-                AvatarUrl = user.AvatarUrl,
-                Posts = user.Posts!,
-                Followers = user.Followers,
-                Followings = user.Followings,
-            };
         }
 
         
@@ -81,11 +56,7 @@ namespace server.Infrastructure.Repositories
 
         public async Task<User?> GetUserByEmailAsync(string email)
         {
-            return await _dbContext.Users
-                .Include(u => u.Posts)
-                .Include(u => u.Followers)
-                .Include(u => u.Followings)
-                .FirstOrDefaultAsync(x => x.Email == email);
+            return await _dbContext.Users.FirstOrDefaultAsync(x => x.Email == email);
         }
     }
 }

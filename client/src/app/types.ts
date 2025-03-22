@@ -42,6 +42,7 @@ export type User = {
     followings: Follows[];
     bio?: string;
     location?: string;
+    isFollowing?: boolean;
 
 };
 
@@ -113,9 +114,10 @@ export type UserDto = {
     avatarUrl: string;
     bio?: string;
     location?: string;
+    dataOfBirth?: Date;
     followers: Follows[];
     followings: Follows[];
-    dataOfBirth?: Date;
+    isFollowing?: boolean;
 };
 
 

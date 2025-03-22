@@ -32,6 +32,6 @@ namespace server.Core.Models
      
         public ICollection<Follows> Followings { get; set; } = new List<Follows>();
 
-       
+        public bool IsFollowing { get; set; }
     }
 }

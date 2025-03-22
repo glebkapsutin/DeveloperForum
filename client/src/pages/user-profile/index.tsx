@@ -89,8 +89,8 @@ export const UserProfile = () => {
                     <ProfileInfo title='Дата Рождения' info={formatToClientDate(data?.dataOfBirth)}/>
                     <ProfileInfo title='Обо мне' info={data?.bio}/>
                     <div className="flex gap-2">
-                        <CountInfo count={data?.followers.length} title='Подписчики'/>
-                        <CountInfo count={data?.followings.length} title='Подписки'/>
+                        <CountInfo count={data?.followers.length || 0} title='Подписчики'/>
+                        <CountInfo count={data?.followings.length || 0} title='Подписки'/>
                     </div>
 
 

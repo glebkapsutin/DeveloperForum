@@ -17,6 +17,8 @@ namespace server.Core.DTO
 
         public string? Location { get; set; }
 
+        public bool IsFollowing { get; set; }
+
         public DateTime? DataOfBirth { get; set; }
         public ICollection<Post> Posts { get; set; } = new List<Post>();
         public ICollection<Follows> Followers { get; set; } = new List<Follows>();

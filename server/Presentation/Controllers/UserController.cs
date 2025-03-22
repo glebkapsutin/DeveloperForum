@@ -92,7 +92,13 @@ namespace server.Presentation.Controllers
                 Username = user.UserName,
                 Email = user.Email,
                 role = user.Role,
-                AvatarUrl=user.AvatarUrl  
+                AvatarUrl=user.AvatarUrl,
+                Bio=user.Bio,
+                Location=user.Location,
+                DataOfBirth=user.DataOfBirth,
+                Followers=user.Followers,
+                Followings=user.Followings,
+                IsFollowing=user.IsFollowing
             });
         }
         
