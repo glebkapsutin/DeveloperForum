@@ -27,9 +27,16 @@ namespace server.Presentation.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<User>> GetUserId(int id)
+        public async Task<ActionResult<UserDto>> GetUserId(int id)
         {
-            var user = await _userService.GetUserByIdAsync(id);
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            if (userIdClaim == null)
+            {
+                return Unauthorized(new { message = "Пользователь не авторизован" });
+            }
+
+            int currentUserId = int.Parse(userIdClaim.Value);
+            var user = await _userService.GetUserDtoByIdAsync(id, currentUserId);
             if (user == null)
             {
                 return NotFound();
@@ -52,55 +59,33 @@ namespace server.Presentation.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteUser(int id)
         {
-            
-                await _userService.DeleteUserAsync(id);
-                return NoContent();
-            
-           
-               
-            
+            await _userService.DeleteUserAsync(id);
+            return NoContent();
         }
 
         [HttpPut("{id}")]
         public async Task<ActionResult> PutUser(int id, User userItem)
         {
-            
-                await _userService.UpdateUserAsync(id, userItem);
-                return NoContent();
-          
-              
+            await _userService.UpdateUserAsync(id, userItem);
+            return NoContent();
         }
         
         [HttpGet("current")]
         public async Task<ActionResult> GetCurrentUser()
         {
-            var userIdClaim= User.FindFirst(ClaimTypes.NameIdentifier);
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
             if (userIdClaim == null)
             {
                 return Unauthorized(new { message = "Пользователь не авторизован" });
-
             }
+
             int userId = int.Parse(userIdClaim.Value);
-            var user =await _userService.GetUserByIdAsync(userId);
-            if(user==null)
+            var user = await _userService.GetUserDtoByIdAsync(userId, userId);
+            if (user == null)
             {
                 return NotFound(new { message = "Пользователь не найден" });
             }
-            return Ok(new UserDto
-            {
-                Id = userId,
-                Username = user.UserName,
-                Email = user.Email,
-                role = user.Role,
-                AvatarUrl=user.AvatarUrl,
-                Bio=user.Bio,
-                Location=user.Location,
-                DataOfBirth=user.DataOfBirth,
-                Followers=user.Followers,
-                Followings=user.Followings,
-                IsFollowing=user.IsFollowing
-            });
+            return Ok(user);
         }
-        
     }
 }

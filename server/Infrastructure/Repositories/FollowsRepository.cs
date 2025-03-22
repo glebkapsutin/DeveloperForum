@@ -19,6 +19,15 @@ namespace server.Infrastructure.Repositories
 
         public async Task AddFollowAsync(int followerId, int followingId)
         {
+            // Проверяем, существует ли уже подписка
+            var existingFollow = await _context.Follows
+                .FirstOrDefaultAsync(f => f.FollowerId == followerId && f.FollowingId == followingId);
+
+            if (existingFollow != null)
+            {
+                return; // Подписка уже существует
+            }
+
             var follow = new Follows
             {
                 FollowerId = followerId,
@@ -31,7 +40,7 @@ namespace server.Infrastructure.Repositories
 
         public async Task RemoveFollowAsync(int followerId, int followingId)
         {
-                var follow = await _context.Follows
+            var follow = await _context.Follows
                 .FirstOrDefaultAsync(f => f.FollowerId == followerId && f.FollowingId == followingId);
 
             if (follow != null)
@@ -39,6 +48,12 @@ namespace server.Infrastructure.Repositories
                 _context.Follows.Remove(follow);
                 await _context.SaveChangesAsync();
             }
+        }
+
+        public async Task<Follows?> GetFollowAsync(int followerId, int followingId)
+        {
+            return await _context.Follows
+                .FirstOrDefaultAsync(f => f.FollowerId == followerId && f.FollowingId == followingId);
         }
     }
 }

@@ -7,10 +7,12 @@ namespace server.Application.Services
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
+        private readonly IFollowsRepository _followsRepository;
 
-        public UserService(IUserRepository userRepository)
+        public UserService(IUserRepository userRepository, IFollowsRepository followsRepository)
         {
             _userRepository = userRepository;
+            _followsRepository = followsRepository;
         }
 
         public async Task<IEnumerable<User>> GetUsersAsync()
@@ -22,10 +24,22 @@ namespace server.Application.Services
         {
             return await _userRepository.GetUserByIdAsync(id);
         }
-        public async Task<UserDto?> GetUserDtoByIdAsync(int id)
+
+        public async Task<UserDto?> GetUserDtoByIdAsync(int id, int currentUserId)
         {
             var users = await _userRepository.GetUserByIdAsync(id);
-            return new UserDto{
+            if (users == null) return null;
+
+            // Проверяем, подписан ли текущий пользователь на запрашиваемого
+            var isFollowing = false;
+            if (currentUserId != id) // Не проверяем подписку на самого себя
+            {
+                var existingFollow = await _followsRepository.GetFollowAsync(currentUserId, id);
+                isFollowing = existingFollow != null;
+            }
+
+            return new UserDto
+            {
                 Id = users.Id,
                 Username = users.UserName,
                 Email = users.Email,
@@ -35,9 +49,9 @@ namespace server.Application.Services
                 Location = users.Location,
                 DataOfBirth = users.DataOfBirth,
                 Followers = users.Followers,
-                Followings = users.Followings
+                Followings = users.Followings,
+                IsFollowing = isFollowing
             };
-            
         }
 
         public async Task<User> CreateUserAsync(User user)
