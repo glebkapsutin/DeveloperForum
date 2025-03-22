@@ -66,7 +66,7 @@ export const UserProfile = () => {
                 />
                 <div className="flex flex-col text-2xl font-bold gap-4 items-center">
                     {data?.username}
-                    {currentUser?.id !== id ? (
+                    {currentUser?.id !== userId ? (
                     <Button
                         variant="contained"
                         color={data?.isFollowing ? 'inherit' : 'primary'}
