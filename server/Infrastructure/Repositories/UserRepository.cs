@@ -24,9 +24,10 @@ namespace server.Infrastructure.Repositories
             return await _dbContext.Users
                 .Include(u => u.Role)
                 .Include(u => u.Followers)
+                    .ThenInclude(f => f.Follower)
                 .Include(u => u.Followings)
+                    .ThenInclude(f => f.Following)
                 .Include(u => u.Posts)
-                
                 .FirstOrDefaultAsync(u => u.Id == id);
         }
 

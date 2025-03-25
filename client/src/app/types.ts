@@ -118,6 +118,7 @@ export type UserDto = {
     followers: Follows[];
     followings: Follows[];
     isFollowing?: boolean;
+    posts?: Post[];
 };
 
 

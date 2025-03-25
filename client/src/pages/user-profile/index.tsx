@@ -59,7 +59,7 @@ export const UserProfile = () => {
                     sx={{
                     width: 200,
                     height: 200,
-                    border: '4px solid white',
+                    border: '1px solid black',
                     borderRadius: '50%',
                     objectFit: 'cover',
                     }}
@@ -73,11 +73,12 @@ export const UserProfile = () => {
                         onClick={handleFollow}
                         endIcon={data?.isFollowing ? <MdOutlinePersonAddDisabled /> : <MdOutlinePersonAddAlt1 />}
                         className="gap-2"
+                        
                     >
                         {data?.isFollowing ? 'Отписаться' : 'Подписаться'}
                     </Button>
                     ) : (
-                    <Button variant="contained" onClick={onOpen} endIcon={<CiEdit />}>
+                    <Button variant="contained" onClick={onOpen} endIcon={<CiEdit />} g>
                         Редактировать
                     </Button>
                     )}

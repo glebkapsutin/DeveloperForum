@@ -50,7 +50,8 @@ namespace server.Application.Services
                 DataOfBirth = users.DataOfBirth,
                 Followers = users.Followers,
                 Followings = users.Followings,
-                IsFollowing = isFollowing
+                IsFollowing = isFollowing,
+                Posts = users.Posts
             };
         }
 
