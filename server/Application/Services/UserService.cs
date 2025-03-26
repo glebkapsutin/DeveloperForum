@@ -61,7 +61,7 @@ namespace server.Application.Services
             return user;
         }
 
-        public async Task UpdateUserAsync(int id, User user)
+        public async Task UpdateUserAsync(int id, UserDto user)
         {
             if (id != user.Id)
             {

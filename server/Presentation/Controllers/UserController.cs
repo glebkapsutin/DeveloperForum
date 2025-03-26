@@ -64,7 +64,7 @@ namespace server.Presentation.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> PutUser(int id, User userItem)
+        public async Task<ActionResult> PutUser(int id, UserDto userItem)
         {
             await _userService.UpdateUserAsync(id, userItem);
             return NoContent();

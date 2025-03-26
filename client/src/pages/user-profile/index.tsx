@@ -1,21 +1,22 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom'
 import { resetUser, selectCurrent } from '../../features/user/userSlice';
 import { useGetUserByIdQuery, useLazyCurrentQuery, useLazyGetUserByIdQuery } from '../../app/services/userApi';
 import { useFollowUserMutation, useUnfollowUserMutation } from '../../app/services/followApi';
 import { GoBack } from '../../components/go-back';
-import { Box, Button, Card as MuiCard } from '@mui/material';
+import { Box, Button, Card as MuiCard, Dialog } from '@mui/material';
 import { MdOutlinePersonAddAlt1, MdOutlinePersonAddDisabled } from 'react-icons/md';
 import { ProfileInfo } from '../../components/profile-info';
 import {formatToClientDate} from '../../utils/format-to-client-date'
 import { CiEdit } from 'react-icons/ci'
 import { CountInfo } from '../../components/count-info';
+import { EditProfile } from '../../components/edit-profile';
 
 
 export const UserProfile = () => {
-    const{ id } = useParams();
-    const { isOpen,onOpen,onClose} = useSelector(selectCurrent);
+    const { id } = useParams();
+    const [open, setOpen] = useState(false);
     const userId = Number(id);
     const {data}= useGetUserByIdQuery(userId);
     const[followUser] = useFollowUserMutation();
@@ -31,7 +32,7 @@ export const UserProfile = () => {
     },[])
     const handleFollow= async ()=> {
         try {
-            if (id) {
+            if (id && currentUser?.id) {
                 if(data?.isFollowing)
                     {
                         await unfollowUser({followerId:currentUser.id, followingId:userId}).unwrap()
@@ -45,7 +46,15 @@ export const UserProfile = () => {
             
         }
     }
+    const handleEditProfile = async ()=>{
+        
+        await triggerGetUserByIdQuery(userId);
+        await triggerCurrentQuery();
+        setOpen(false);
+    }
 
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
     
     return (
         <>
@@ -73,12 +82,18 @@ export const UserProfile = () => {
                         onClick={handleFollow}
                         endIcon={data?.isFollowing ? <MdOutlinePersonAddDisabled /> : <MdOutlinePersonAddAlt1 />}
                         className="gap-2"
-                        
                     >
                         {data?.isFollowing ? 'Отписаться' : 'Подписаться'}
                     </Button>
                     ) : (
-                    <Button variant="contained" onClick={onOpen} endIcon={<CiEdit />} g>
+                    <Button 
+                        variant="contained" 
+                        onClick={handleOpen}
+                        endIcon={<CiEdit />}
+                        sx={{
+                            borderRadius: '8px',
+                        }}
+                    >
                         Редактировать
                     </Button>
                     )}
@@ -93,11 +108,16 @@ export const UserProfile = () => {
                         <CountInfo count={data?.followers.length || 0} title='Подписчики'/>
                         <CountInfo count={data?.followings.length || 0} title='Подписки'/>
                     </div>
-
-
                 </MuiCard>
              </div>
-        
+            <Dialog 
+                open={open} 
+                onClose={handleClose}
+                maxWidth="sm"
+                fullWidth
+            >
+                <EditProfile isOpen={open} onClose={handleEditProfile} user={data}/>
+            </Dialog>
         </>
     )
 }

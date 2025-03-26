@@ -52,6 +52,7 @@ export const Input: React.FC<Props> = ({
                 ) : null,
             }}
             className="my-2" 
+            
         />
     );
 };

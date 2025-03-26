@@ -9,13 +9,13 @@ export const NavBar: React.FC = () => {
         <nav>
             <Box display="flex" flexDirection="column" gap={2}>
                 <NavButton href="/" icon={<Newspaper size={20} />}>
-                    Posts
+                    Посты
                 </NavButton>
                 <NavButton href="/following" icon={<Users size={20} />}>
-                    Following
+                    Подписки
                 </NavButton>
                 <NavButton href="/followers" icon={<UserPlus size={20} />}>
-                    Followers
+                    Подписчики
                 </NavButton>
             </Box>
         </nav>

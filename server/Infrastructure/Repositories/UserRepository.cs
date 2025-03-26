@@ -38,9 +38,21 @@ namespace server.Infrastructure.Repositories
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task UpdateUserAsync(User user)
+        public async Task UpdateUserAsync(UserDto userDto)
         {
-            _dbContext.Entry(user).State = EntityState.Modified;
+            var existingUser = await _dbContext.Users.FindAsync(userDto.Id);
+            if (existingUser == null)
+            {
+                throw new KeyNotFoundException("User not found");
+            }
+
+            existingUser.UserName = userDto.Username;
+            existingUser.Email = userDto.Email;
+            existingUser.AvatarUrl = userDto.AvatarUrl ?? existingUser.AvatarUrl;
+            existingUser.Bio = userDto.Bio;
+            existingUser.Location = userDto.Location;
+            existingUser.DataOfBirth = userDto.DataOfBirth;
+
             await _dbContext.SaveChangesAsync();
         }
 
