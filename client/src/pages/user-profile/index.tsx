@@ -59,7 +59,7 @@ export const UserProfile = () => {
     return (
         <>
         <GoBack />
-            <div className="flex items-center gap-4">
+            <div className="flex  gap-4">
                 <MuiCard className="flex flex-col items-center text-center space-y-4 p-5 flex-2" sx={{ borderRadius: '12px' }}>
                 <Box
                     component="img"

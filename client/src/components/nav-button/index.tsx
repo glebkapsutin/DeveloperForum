@@ -30,6 +30,7 @@ export const NavButton: React.FC<Props> = ({ children, icon, href }) => {
                 "&:hover": {
                     backgroundColor: theme.palette.mode === "dark" ? "rgba(255, 255, 255, 0.2)" : "rgba(0, 0, 0, 0.1)", // ������� ��� ������
                 },
+                
             }}
         >
             {children}

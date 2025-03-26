@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Header } from '../header';
 import { NavBar } from '../nav-bar';
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { Container } from '../container';
 import { Grid } from '@mui/material';
 import { useSelector } from 'react-redux';
@@ -11,6 +11,8 @@ import { Profile } from '../profile';
 export const Layout = () => {
   const isAuthenticated = useSelector(selectIsAuthenticated);
   const navigate = useNavigate();
+  const location = useLocation();
+  const isUserProfilePage = location.pathname.startsWith('/User/');
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -28,13 +30,15 @@ export const Layout = () => {
             <NavBar />
           </Grid>
           {/* Центральная колонка – основное содержимое */}
-          <Grid item xs={6}>
+          <Grid item xs={isUserProfilePage ? 9 : 6}>
             <Outlet />
           </Grid>
           {/* Правая колонка – профиль */}
-          <Grid item xs={3}>
-            <Profile />
-          </Grid>
+          {!isUserProfilePage && (
+            <Grid item xs={3}>
+              <Profile />
+            </Grid>
+          )}
         </Grid>
       </Container>
     </>

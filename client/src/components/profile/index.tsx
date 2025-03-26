@@ -13,7 +13,7 @@ export const Profile = () => {
   const { username, email, avatarUrl, id } = current;
 
   return (
-     <Card className="py-4" sx={{ width: '100%',borderRadius:'10px' }} >
+     <Card  sx={{ width: '100%',borderRadius:'12px' }} >
       <CardMedia
         component="img"
         image={`${avatarUrl}`}
