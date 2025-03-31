@@ -27,7 +27,7 @@ export const Following = () => {
                     <CardMedia className='block'>
                       <User
                         name={follow.following.userName}
-                        avatarUrl={follow.following.avatar}
+                        avatarUrl={follow.following.avatarUrl}
                         description={follow.following.email}
                       />
                     </CardMedia>

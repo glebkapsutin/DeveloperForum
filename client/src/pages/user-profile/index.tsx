@@ -68,7 +68,7 @@ export const UserProfile = () => {
                     sx={{
                     width: 200,
                     height: 200,
-                    border: '1px solid black',
+                    
                     borderRadius: '50%',
                     objectFit: 'cover',
                     }}

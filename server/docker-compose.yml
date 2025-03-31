@@ -34,5 +34,7 @@ services:
     volumes:
       - developforum_db_data:/var/lib/postgresql/data
 
+
+
 volumes:
   developforum_db_data:

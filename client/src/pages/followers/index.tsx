@@ -29,7 +29,7 @@ export const Followers = () => {
                             <CardMedia className='block'>
                                 <User
                                     name={follow.follower.userName}
-                                    avatarUrl={follow.follower.avatar}
+                                    avatarUrl={follow.follower.avatarUrl}
                                     description={follow.follower.email}
                                 />
                             </CardMedia>
