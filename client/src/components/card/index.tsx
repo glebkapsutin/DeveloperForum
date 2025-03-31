@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, ReactNode, useEffect } from 'react';
 import { useLikePostMutation, useUnlikePostMutation } from '../../app/services/likesApi';
 import { getPostById, useDeletePostMutation, useLazyGetAllPostsQuery, useLazyGetPostByIdQuery } from '../../app/services/postApi';
 import { useDeleteCommentMutation } from '../../app/services/commentApi';
@@ -19,6 +19,8 @@ import { MdOutlineFavoriteBorder } from 'react-icons/md';
 import { FaRegComment } from 'react-icons/fa';
 import { useTheme } from "@mui/material/styles";
 import { Comment } from '../../app/types';
+import hljs from 'highlight.js';
+import 'highlight.js/styles/vs2015.css';
 
 type Props = {
     avatarUrl: string;
@@ -34,6 +36,69 @@ type Props = {
     isLikedByUser?: boolean;
     comments?: Comment[];
     postId?: number;
+};
+
+const CodeBlock: React.FC<{ code: string; language: string }> = ({ code, language }) => {
+    const codeRef = React.useRef<HTMLElement>(null);
+
+    useEffect(() => {
+        if (codeRef.current) {
+            hljs.highlightElement(codeRef.current);
+        }
+    }, [code, language]);
+
+    return (
+        <pre className="rounded-lg overflow-hidden bg-[#1E1E1E] p-4">
+            <code ref={codeRef} className={`language-${language}`}>
+                {code}
+            </code>
+        </pre>
+    );
+};
+
+const renderDescription = (description: string): ReactNode[] => {
+    // Регулярное выражение для поиска блоков кода
+    const codeBlockRegex = /```(\w+)?\n([\s\S]*?)```/g;
+    const parts: ReactNode[] = [];
+    let lastIndex = 0;
+    let match;
+
+    while ((match = codeBlockRegex.exec(description)) !== null) {
+        // Добавляем текст до блока кода
+        if (match.index > lastIndex) {
+            parts.push(
+                <p key={`text-${lastIndex}`} className="text-base text-primary mt-2">
+                    {description.slice(lastIndex, match.index)}
+                </p>
+            );
+        }
+
+        // Добавляем блок кода с подсветкой синтаксиса
+        const language = match[1] || 'plaintext';
+        const code = match[2].trim();
+        parts.push(
+            <div key={`code-${match.index}`} className="my-4">
+                <CodeBlock code={code} language={language} />
+            </div>
+        );
+
+        lastIndex = match.index + match[0].length;
+    }
+
+    // Добавляем оставшийся текст после последнего блока кода
+    if (lastIndex < description.length) {
+        parts.push(
+            <p key={`text-${lastIndex}`} className="text-base text-primary mt-2">
+                {description.slice(lastIndex)}
+            </p>
+        );
+    }
+
+    return parts.length > 0 ? parts : [
+        <p key="default" className="text-base text-primary mt-2">
+            {description}
+        </p>
+    ];
 };
 
 export const Card: React.FC<Props> = ({
@@ -130,9 +195,9 @@ export const Card: React.FC<Props> = ({
                 </h2>
 
                
-                <p className="text-base text-primary mt-2">
-                    {description}
-                </p>
+                <div className="mt-2">
+                    {renderDescription(description)}
+                </div>
             </CardContent>
 
             {cardFor !== 'comment' && (
