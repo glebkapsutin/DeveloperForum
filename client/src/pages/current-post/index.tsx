@@ -56,19 +56,19 @@ export const CurrentPost = () => {
                 {hasComments ? (
                     comments.map((comment: CommentDto) => (
                         <Card
-                            cardFor="comment"
                             key={comment.id}
                             avatarUrl={comment.user?.avatarUrl || ""}
+                            name={comment.user?.username || "Пользователь"}
                             title=""
                             description={comment.description}
                             authorId={comment.userId}
                             id={comment.id}
-                            name={comment.user?.username || "Пользователь"}
+                            createdDate={new Date(comment.createdDate).toISOString()}
+                            cardFor="comment"
+                            postId={id}
                             likesCount={0}
                             commentsCount={0}
-                            createdDate={comment.createdDate}
                             isLikedByUser={false}
-                            postId={id}
                         />
                     ))
                 ) : (

@@ -1,6 +1,6 @@
 import { Input } from "../../components/input"
 import { useForm } from "react-hook-form"
-import { Button, Link } from "@mui/material"
+import { Button, Link, Typography } from "@mui/material"
 import { useRegisterUserMutation } from "../../app/services/userApi"
 import { ErrorMessage } from "../../components/error-message"
 import { RegistrationRequest } from "../../app/types";
@@ -22,9 +22,9 @@ export const Register = ({ setSelected }: Props) => {
         mode: "onChange",
         reValidateMode: "onBlur",
         defaultValues: {
+            username: "",
             email: "",
-            password: "",
-            name: "",
+            password: ""
         },
     })
 
@@ -62,16 +62,13 @@ export const Register = ({ setSelected }: Props) => {
             />
             <ErrorMessage error={error} />
 
-            <p className="text-center text-sm">
-                Уже есть аккаунт?{" "}
-                <Link
-                    size="sm"
-                    className="cursor-pointer"
-                    onClick={() => setSelected("login")}
-                >
-                   Войдите
-                </Link>
-            </p>
+            <Typography
+                variant="body2"
+                className="text-center mt-4 cursor-pointer hover:underline"
+                onClick={() => setSelected("login")}
+            >
+                Уже есть аккаунт? Войти
+            </Typography>
             <div className="flex gap-2 justify-end">
                 <Button fullWidth variant="contained" color="primary" type="submit"  >
                    Зарегистрируйтесь

@@ -33,9 +33,20 @@ services:
       - deploy-guide-dev
     volumes:
       - developforum_db_data:/var/lib/postgresql/data
-      
-  
+
+  react-app:
+    build:
+      context: ../client
+      dockerfile: DockerFile
+    container_name: react-app
+    ports:
+      - "3000:80"
+    networks:
+      - deploy-guide-dev
+    depends_on:
+      - app
+    environment:
+      - REACT_APP_API_URL=http://app:8080
 
 volumes:
   developforum_db_data:
-  react-app:

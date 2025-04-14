@@ -36,7 +36,7 @@ export type User = {
     registeredAt: string;  
     posts?: Post[];        
     role: Role;
-    avatar: string;
+    avatarUrl: string;
     roleId: number;
     followers: Follows[];
     followings: Follows[];

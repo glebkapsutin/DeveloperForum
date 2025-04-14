@@ -43,7 +43,7 @@ export const Input: React.FC<Props> = ({
             onBlur={field.onBlur}
             error={invalid}
             
-            helperText={errors[name]?.message || ""}
+            helperText={errors[name]?.message?.toString() || ""}
             fullWidth
             variant="outlined"
             InputProps={{

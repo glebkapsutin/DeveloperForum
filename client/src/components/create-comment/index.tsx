@@ -27,13 +27,13 @@ export const CreateComment: React.FC<Props> = ({ postId }) => {
 
     const onSubmit = handleSubmit(async (data) => {
         try {
-            const targetPostId = postId || (id ? parseInt(id) : null);
-            if (targetPostId && currentUser) {
+            const targetPostId = postId || (id ? parseInt(id) : 0);
+            if (targetPostId > 0 && currentUser) {
                 const commentData = {
                     description: data.comment,
                     userId: currentUser.id,
                     postId: targetPostId,
-                    createdDate: new Date().toISOString()
+                    createdDate: new Date()
                 };
                 console.log('Comment Data:', commentData);
                 await createComment(commentData).unwrap();
@@ -70,11 +70,9 @@ export const CreateComment: React.FC<Props> = ({ postId }) => {
                 type="submit"
                 variant="contained"
                 className="self-end bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg flex items-center gap-2"
-                color=''
-                
+                color="primary"
                 sx={{borderRadius: "12px"}}
                 endIcon={<IoMdCreate />}
-                
             >
                 Ответить
             </Button>

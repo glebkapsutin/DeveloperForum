@@ -60,7 +60,7 @@ export const CreatePost = () => {
             variant='outlined'
             fullWidth
             error={!!errors.title}
-            helperText={errors.title ? errors.title.message : ''}
+            helperText={errors.title?.message?.toString() || ''}
             className='mb-2'
             InputProps={{
               sx: { borderRadius: '12px' }
@@ -80,7 +80,7 @@ export const CreatePost = () => {
             variant='outlined'
             fullWidth
             error={!!errors.description}
-            helperText={errors.description ? errors.description.message : ''}
+            helperText={errors.description?.message?.toString() || ''}
             className='mb-2'
             multiline
             rows={4}
